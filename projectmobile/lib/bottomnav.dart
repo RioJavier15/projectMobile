@@ -14,7 +14,7 @@ class BottomNav extends StatefulWidget {
 class _BottomNavState extends State<BottomNav> {
   int _selectedIndex = 0;
   final _screen = [
-    HomeWidget(),
+    HomePage(),
     Riwayat(),
     const ProfileScreen(),
   ];
