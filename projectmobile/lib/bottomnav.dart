@@ -15,7 +15,7 @@ class _BottomNavState extends State<BottomNav> {
   int _selectedIndex = 0;
   final _screen = [
     HomePage(),
-    Riwayat(),
+    Riwayat(),  
     const ProfileScreen(),
   ];
   @override
