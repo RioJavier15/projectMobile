@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projectmobile/bottomnav.dart';
+import 'package:projectmobile/login/login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: const BottomNav(),
+      home: const LoginScreen(),
     );
   }
 }

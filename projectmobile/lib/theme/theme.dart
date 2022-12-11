@@ -12,6 +12,7 @@ Color blackColor = const Color(0xFF222831);
 Color black2Color = const Color(0xFF000000);
 Color primaryColor = const Color(0xFFFFFFFF);
 Color grey2Color = const Color(0xFFD9D9D9);
+Color white = Color(0xFFFFFFFF);
 
 TextStyle ButtonTextStyle = GoogleFonts.montserrat(
     color: TextButtonColor, fontSize: 13, fontWeight: FontWeight.w600);
@@ -42,15 +43,19 @@ TextStyle regulerText12 =
     GoogleFonts.montserrat(fontSize: 12, fontWeight: FontWeight.w600);
 TextStyle regulerText13 =
     GoogleFonts.montserrat(fontSize: 13, fontWeight: FontWeight.w600);
-TextStyle regulerText14 = 
+TextStyle regulerText14 =
     GoogleFonts.montserrat(fontSize: 14, fontWeight: FontWeight.w600);
 
 // MEDIUM TEXT
 TextStyle mediumText9 = GoogleFonts.montserrat(fontSize: 9, fontWeight: medium);
-TextStyle mediumText10 = GoogleFonts.montserrat(fontSize: 10, fontWeight: medium);
-TextStyle mediumText12 = GoogleFonts.montserrat(fontSize: 12, fontWeight: medium);
-TextStyle mediumText13 = GoogleFonts.montserrat(fontSize: 13, fontWeight: medium);
-TextStyle mediumText15 = GoogleFonts.montserrat(fontSize: 15, fontWeight: medium);
+TextStyle mediumText10 =
+    GoogleFonts.montserrat(fontSize: 10, fontWeight: medium);
+TextStyle mediumText12 =
+    GoogleFonts.montserrat(fontSize: 12, fontWeight: medium);
+TextStyle mediumText13 =
+    GoogleFonts.montserrat(fontSize: 13, fontWeight: medium);
+TextStyle mediumText15 =
+    GoogleFonts.montserrat(fontSize: 15, fontWeight: medium);
 
 // SEMIBOLD TEXT
 TextStyle semiBoldText13 =
