@@ -29,12 +29,12 @@ class WhatsNewCard extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           decoration: BoxDecoration(
-            color: GreyColor,
+            color: NavyColor,
             borderRadius: BorderRadius.circular(19),
           ),
           child: Text(
             text,
-            style: regulerText10.copyWith(color: blackColor),
+            style: regulerText10.copyWith(color: TextButtonColor),
           ),
         ),
         const SizedBox(
@@ -45,11 +45,7 @@ class WhatsNewCard extends StatelessWidget {
           style: boldText14.copyWith(color: primaryColor),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 35),
-          child: Text(
-            'See all',
-            style: regulerText14.copyWith(color: NavyColor),
-          ),
+          padding: const EdgeInsets.symmetric(vertical: 10),
         ),
       ],
     );

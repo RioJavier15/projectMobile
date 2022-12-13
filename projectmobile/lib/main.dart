@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projectmobile/bottomnav.dart';
+import 'package:flutter/services.dart';
 import 'package:projectmobile/login/login.dart';
 
 void main() {
@@ -15,8 +15,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Project Mobile',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+          primarySwatch: Colors.blue,
+          appBarTheme: AppBarTheme(
+            systemOverlayStyle: SystemUiOverlayStyle(
+                //<-- SEE HERE
+                // Status bar color
+                statusBarColor: Colors.transparent,
+                statusBarIconBrightness: Brightness.dark,
+                statusBarBrightness: Brightness.dark),
+          )),
       debugShowCheckedModeBanner: false,
       home: const LoginScreen(),
     );

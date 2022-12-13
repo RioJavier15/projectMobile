@@ -73,7 +73,7 @@ TextStyle boldText15 = GoogleFonts.montserrat(fontSize: 15, fontWeight: bold);
 // EXTRABOLD TEXT
 
 TextStyle mediumText17 =
-    GoogleFonts.montserrat(fontSize: 17, fontWeight: medium);
+    GoogleFonts.montserrat(fontSize: 17, fontWeight: semiBold);
 
 // SECONDARY TEXT
 TextStyle nunitoExtraBoldText18 = GoogleFonts.nunito(

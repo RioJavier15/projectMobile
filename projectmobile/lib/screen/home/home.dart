@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:projectmobile/screen/home/components/card_info_home.dart';
 import 'package:projectmobile/screen/home/components/rekomendasi_card.dart';
@@ -17,7 +16,6 @@ class _HomePageState extends State<HomePage> {
   List cards = [
     CardInfoHome(),
   ];
-
   int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -143,7 +141,7 @@ class _HomePageState extends State<HomePage> {
       return Column(
         children: [
           Container(
-            margin: EdgeInsets.only(left: 16, top: 45, right: 16),
+            margin: EdgeInsets.only(left: 16, top: 15, right: 16),
             child: Row(
               children: [
                 Text('Rekomendasi Untukmu',
@@ -185,7 +183,7 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: const EdgeInsets.only(left: 16, bottom: 14),
             child: Text(
-              'What’s new ?',
+              'Contact Person',
               style: nunitoExtraBoldText18,
             ),
           ),
@@ -196,16 +194,16 @@ class _HomePageState extends State<HomePage> {
               children: [
                 WhatsNewCard(
                   image: 'assets/images/video-subscription.png',
-                  text: 'Package',
-                  title: 'Video Digital Subscription',
+                  text: 'Hubungi',
+                  title: 'Admin Fans TV',
                 ),
                 SizedBox(
                   width: 16,
                 ),
                 WhatsNewCard(
                   image: 'assets/images/poin-image.png',
-                  text: 'Poin',
-                  title: 'Undi-undi Hepi',
+                  text: 'Hubungi',
+                  title: 'Teknisi Fans TV',
                 ),
               ],
             ),
@@ -217,11 +215,11 @@ class _HomePageState extends State<HomePage> {
     Widget content() {
       //kotak bawah
       return Container(
-        margin: EdgeInsets.only(top: 20, left: 10, right: 10),
+        margin: EdgeInsets.only(top: 5),
         decoration: BoxDecoration(
           color: Navy2Color,
           borderRadius: BorderRadius.vertical(
-            top: Radius.circular(30),
+            top: Radius.circular(20),
           ),
         ),
         child: Column(
@@ -235,6 +233,7 @@ class _HomePageState extends State<HomePage> {
 
     //background home
     return Scaffold(
+      extendBodyBehindAppBar: true,
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
