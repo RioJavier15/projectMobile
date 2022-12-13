@@ -9,38 +9,38 @@ class SuccesDialog extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(4),
         ),
-        child: Stack(
-          children: [
-            Container(
-              height: 170,
-              width: 280,
-              child: Padding(
-                padding: EdgeInsets.only(left: 30, right: 30, top: 20),
-                child: Column(
+        child: Container(
+            height: 140,
+            width: 40,
+            child: Padding(
+              padding: EdgeInsets.all(20),
+              child: ListView(children: [
+                Column(
                   children: [
-                    SizedBox(
-                      height: 5,
-                      width: 5,
-                    ),
                     Icon(
                       Icons.task_alt,
-                      color: blackColor,
-                      size: 75,
+                      color: green,
+                      size: 50,
                     ),
-                    Container(
-                        child: Text(
+                    Text(
                       'Success',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.montserrat(
-                          fontSize: 30,
+                          fontSize: 20,
                           fontWeight: FontWeight.w600,
                           color: blackColor),
-                    )),
+                    ),
+                    Text(
+                      'Data berhasil diubah',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.montserrat(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: blackColor),
+                    ),
                   ],
                 ),
-              ),
-            )
-          ],
-        ));
+              ]),
+            )));
   }
 }

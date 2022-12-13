@@ -15,7 +15,8 @@ class _EditPassword extends State<EditPassword> {
   bool showPassword = false;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SafeArea(
+        child: Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(53),
           child: AppBar(
@@ -47,7 +48,11 @@ class _EditPassword extends State<EditPassword> {
               padding: EdgeInsets.only(top: 20, left: 24, right: 30),
               child: Column(
                 children: [
-                  buildTextField("Password", "**************", true),
+                  buildTextField(
+                    "Password",
+                    "**************",
+                    true,
+                  ),
                   buildTextField("Konfirmasi Password", "**************", true),
                   SizedBox(height: 20),
                   SizedBox(
@@ -57,6 +62,9 @@ class _EditPassword extends State<EditPassword> {
                           showDialog(
                               context: context,
                               builder: (context) {
+                                Future.delayed(Duration(seconds: 2), () {
+                                  Navigator.of(context).pop(true);
+                                });
                                 return SuccesDialog();
                               });
                         },
@@ -75,7 +83,7 @@ class _EditPassword extends State<EditPassword> {
               ))
         ])
       ]),
-    );
+    ));
   }
 
   Widget buildTextField(

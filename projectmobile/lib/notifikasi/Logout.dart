@@ -7,66 +7,58 @@ class LogoutDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: BorderRadius.circular(5),
         ),
-        child: Stack(
-          children: [
-            Container(
-              height: 188,
-              width: 328,
-              child: Padding(
-                padding: EdgeInsets.all(15),
-                child: Column(
+        child: Container(
+          height: 120,
+          width: 100,
+          alignment: Alignment.center,
+          child: Padding(
+              padding: EdgeInsets.all(15),
+              child: ListView(children: [
+                Column(
                   children: [
+                    Text('Apakah anda yakin ingin keluar akun?',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.montserrat(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            color: blackColor)),
                     SizedBox(
-                      height: 30,
-                      width: 27,
+                      height: 10,
                     ),
-                    Text(
-                      'Apakah anda yakin ingin keluar akun?',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.montserrat(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: blackColor),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: [
-                        Padding(padding: EdgeInsets.only(left: 30, right: 30)),
-                        ElevatedButton(
-                          onPressed: () {},
-                          child: Text('Ya'),
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: ButtonBackground,
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 20, horizontal: 20),
-                              textStyle: ButtonTextStyle),
-                        ),
-                        SizedBox(
-                          height: 10,
-                          width: 30,
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.pop(context, 'Cancel');
-                          },
-                          child: Text('Cancel'),
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: ButtonBackground,
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 20, horizontal: 20),
-                              textStyle: ButtonTextStyle),
-                        )
-                      ],
-                    )
+                    Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 40),
+                        child: Row(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {},
+                              child: Text('Ya'),
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: ButtonBackground,
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 10),
+                                  textStyle: ButtonTextStyle),
+                            ),
+                            Spacer(
+                              flex: 5,
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context, 'Cancel');
+                              },
+                              child: Text('Cancel'),
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: ButtonBackground,
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 10),
+                                  textStyle: ButtonTextStyle),
+                            )
+                          ],
+                        )),
                   ],
-                ),
-              ),
-            )
-          ],
+                )
+              ])),
         ));
   }
 }

@@ -5,12 +5,12 @@ class RekomendasiCard extends StatelessWidget {
   const RekomendasiCard({
     Key? key,
     required this.title,
-    required this.time,
+    required this.kecepatan,
     required this.price,
   }) : super(key: key);
 
   final String title;
-  final String time;
+  final String kecepatan;
   final String price;
 
   @override
@@ -23,7 +23,7 @@ class RekomendasiCard extends StatelessWidget {
           borderRadius: const BorderRadius.vertical(
             top: Radius.circular(14),
           ),
-          color: primaryColor,
+          color: TextButtonColor,
           boxShadow: [
             BoxShadow(
               color: GreyColor,
@@ -71,7 +71,7 @@ class RekomendasiCard extends StatelessWidget {
                   height: 8,
                 ),
                 Text(
-                  time,
+                  kecepatan,
                   style: mediumText15.copyWith(
                     color: NavyColor,
                   ),

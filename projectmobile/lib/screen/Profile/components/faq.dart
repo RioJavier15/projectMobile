@@ -12,39 +12,40 @@ class Faq extends StatefulWidget {
 class _FaqState extends State<Faq> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(53),
-          child: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            centerTitle: true,
-            title: Text(
-              'Informasi Dan Bantuan',
-              style: AppbarStyle,
+    return SafeArea(
+        child: Scaffold(
+            appBar: PreferredSize(
+              preferredSize: Size.fromHeight(53),
+              child: AppBar(
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                centerTitle: true,
+                title: Text(
+                  'Informasi Dan Bantuan',
+                  style: AppbarStyle,
+                ),
+                leading: IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  iconSize: 24,
+                  color: blackColor,
+                  splashRadius: 20,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
             ),
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              iconSize: 24,
-              color: blackColor,
-              splashRadius: 20,
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ),
-        ),
-        body: Padding(
-          padding: EdgeInsets.only(left: 5, top: 20),
-          child: ListView.separated(
-            itemCount: faq.length,
-            itemBuilder: (BuildContext context, int index) {
-              return _buildExpandableTile(faq[index]);
-            },
-            separatorBuilder: (BuildContext context, int index) =>
-                const Divider(),
-          ),
-        ));
+            body: Padding(
+              padding: EdgeInsets.only(left: 5, top: 20),
+              child: ListView.separated(
+                itemCount: faq.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return _buildExpandableTile(faq[index]);
+                },
+                separatorBuilder: (BuildContext context, int index) =>
+                    const Divider(),
+              ),
+            )));
   }
 
   final List faq = [

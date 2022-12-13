@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> {
     //pojok atas home
     Widget header() {
       return Container(
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         child: Column(
           children: [
             Row(
@@ -146,18 +146,10 @@ class _HomePageState extends State<HomePage> {
             margin: EdgeInsets.only(left: 16, top: 45, right: 16),
             child: Row(
               children: [
-                Text(
-                  'Rekomendasi Untukmu',
-                  style: nunitoExtraBoldText18.copyWith(
-                    color: primaryColor,)
-                ),
-                Spacer(),
-                Text(
-                  'See all',
-                  style: regulerText12.copyWith(
-                    color: primaryColor,
-                  ),
-                )
+                Text('Rekomendasi Untukmu',
+                    style: nunitoExtraBoldText18.copyWith(
+                      color: primaryColor,
+                    )),
               ],
             ),
           ),
@@ -168,7 +160,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 RekomendasiCard(
                   title: 'Paket Lite',
-                  time: '29 Jun 2021 13:08:07',
+                  kecepatan: '10 Mbps',
                   price: 'Rp 100,000',
                 ),
                 SizedBox(
@@ -176,13 +168,13 @@ class _HomePageState extends State<HomePage> {
                 ),
                 RekomendasiCard(
                   title: 'Internet Dedicated',
-                  time: '29 Jun 2021 13:05:07',
+                  kecepatan: '20 Mbps',
                   price: 'Rp 150,000',
                 ),
               ],
             ),
           )
-        ],  
+        ],
       );
     }
 
@@ -222,7 +214,8 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
-    Widget content() { //kotak bawah
+    Widget content() {
+      //kotak bawah
       return Container(
         margin: EdgeInsets.only(top: 20, left: 10, right: 10),
         decoration: BoxDecoration(
@@ -241,7 +234,7 @@ class _HomePageState extends State<HomePage> {
     }
 
     //background home
-    return Scaffold( 
+    return Scaffold(
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(

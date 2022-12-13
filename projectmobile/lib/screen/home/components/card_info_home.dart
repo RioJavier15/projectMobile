@@ -19,7 +19,7 @@ class CardInfoHome extends StatelessWidget {
       );
     }
 
-Widget infoCardList_2() {
+    Widget infoCardList_2() {
       return Row(
         children: [
           Expanded(
@@ -44,19 +44,18 @@ Widget infoCardList_2() {
                 ),
                 Row(
                   children: [
-                    
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
                             Image.asset(
-                      'assets/icons/icon-warning.png',
-                      width: 13,
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
+                              'assets/icons/icon-warning.png',
+                              width: 13,
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
                             Text(
                               '3 hari lagi',
                               style: mediumText10.copyWith(
@@ -65,13 +64,12 @@ Widget infoCardList_2() {
                           ],
                         ),
                         Text(
-                      'Sebelum tanggal 23 desember',
-                      style: mediumText10.copyWith(
-                          color: grey2Color, letterSpacing: 0.2),
-                    )
+                          'Sebelum tanggal 23 desember',
+                          style: mediumText10.copyWith(
+                              color: grey2Color, letterSpacing: 0.2),
+                        )
                       ],
                     ),
-                    
                   ],
                 )
               ],
@@ -80,7 +78,7 @@ Widget infoCardList_2() {
         ],
       );
     }
-    
+
     //kotak atas
     return Container(
       margin: const EdgeInsets.only(top: 18, left: 16, right: 16),
@@ -103,34 +101,43 @@ Widget infoCardList_2() {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.only( top: 15, bottom: 5),
+                padding: const EdgeInsets.only(top: 15, bottom: 5),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                    padding: EdgeInsets.only(left:17), //apply padding to some sides only
-                    child: Text("Paket Kencangg",style: mediumText17.copyWith(color: grey2Color),),
+                      padding: EdgeInsets.only(
+                          left: 17), //apply padding to some sides only
+                      child: Text(
+                        "Paket Internet Lite",
+                        style: mediumText17.copyWith(color: grey2Color),
+                      ),
                     ),
                     Padding(
-                    padding: EdgeInsets.only(left:17), //apply padding to some sides only
-                    child: Text('Deskripsi :',
-                      style: mediumText12.copyWith(color: grey2Color)),
+                      padding: EdgeInsets.only(
+                          left: 17), //apply padding to some sides only
+                      child: Text('Deskripsi :',
+                          style: mediumText12.copyWith(color: grey2Color)),
                     ),
                     Padding(
-                    padding: EdgeInsets.only(left:17), //apply padding to some sides only
-                    child: Text('internet sangat kencang',
-                      style: mediumText12.copyWith(color: grey2Color),),
+                      padding: EdgeInsets.only(
+                          left: 17), //apply padding to some sides only
+                      child: Text(
+                        'internet sangat kencang',
+                        style: mediumText12.copyWith(color: grey2Color),
+                      ),
                     ),
-                    
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Container(
-                          margin: EdgeInsets.only(right: 25,bottom: 15,top: 20),
-                          padding:
-                              const EdgeInsets.symmetric(vertical: 7, horizontal: 19),
+                          margin:
+                              EdgeInsets.only(right: 25, bottom: 15, top: 20),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 7, horizontal: 19),
                           decoration: BoxDecoration(
                             color: grey2Color,
                             borderRadius: BorderRadius.circular(16.5),
@@ -142,74 +149,77 @@ Widget infoCardList_2() {
                         ),
                       ],
                     ),
-                    
-                    Divider(
-                    color: grey2Color,
-                    thickness: 5,
-                  ),
 
-                  //kotak bawah
-                  Padding(
-                    padding: EdgeInsets.only(left:17,top: 15), //apply padding to some sides only
-                    child: Row(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: circularPercent(0.9),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        flex: 7,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
+                    Divider(
+                      color: grey2Color,
+                      thickness: 5,
+                    ),
+
+                    //kotak bawah
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: 17, top: 15), //apply padding to some sides only
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: circularPercent(0.9),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            flex: 7,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  'Tenggat Bayar',
-                                  style: mediumText13.copyWith(color: grey2Color),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                Row(
                                   children: [
-                                    Row(
-                                      children: [
-                                        Image.asset(
-                                  'assets/icons/icon-warning.png',
-                                  width: 13,
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                        Text(
-                                          '3 hari lagi',
-                                          style: mediumText10.copyWith(
-                                              color: grey2Color, letterSpacing: 0.2),
-                                        ),
-                                      ],
-                                    ),
                                     Text(
-                                  'Sebelum tanggal 23 desember',
-                                  style: mediumText10.copyWith(
-                                      color: grey2Color, letterSpacing: 0.2),
-                                )
+                                      'Tenggat Bayar',
+                                      style: mediumText13.copyWith(
+                                          color: grey2Color),
+                                    ),
                                   ],
                                 ),
-                                
+                                Row(
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Image.asset(
+                                              'assets/icons/icon-warning.png',
+                                              width: 13,
+                                            ),
+                                            const SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text(
+                                              '3 hari lagi',
+                                              style: mediumText10.copyWith(
+                                                  color: grey2Color,
+                                                  letterSpacing: 0.2),
+                                            ),
+                                          ],
+                                        ),
+                                        Text(
+                                          'Sebelum tanggal 23 desember',
+                                          style: mediumText10.copyWith(
+                                              color: grey2Color,
+                                              letterSpacing: 0.2),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                )
                               ],
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),  
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ],
                 ),

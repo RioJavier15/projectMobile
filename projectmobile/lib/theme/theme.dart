@@ -13,6 +13,8 @@ Color black2Color = const Color(0xFF000000);
 Color primaryColor = const Color(0xFFFFFFFF);
 Color grey2Color = const Color(0xFFD9D9D9);
 Color white = Color(0xFFFFFFFF);
+Color red = Color(0xFFF27474);
+Color green = Color(0XFF7CEE53);
 
 TextStyle ButtonTextStyle = GoogleFonts.montserrat(
     color: TextButtonColor, fontSize: 13, fontWeight: FontWeight.w600);
@@ -31,7 +33,9 @@ TextStyle TextProfileStyle = GoogleFonts.montserrat(
 TextStyle TextFieldStyle2 = GoogleFonts.montserrat(
     color: blackColor, fontSize: 13, fontWeight: FontWeight.w600);
 TextStyle NavTextStyle = GoogleFonts.montserrat(
-    color: blackColor, fontSize: 13, fontWeight: FontWeight.w600);
+    color: blackColor, fontSize: 12, fontWeight: FontWeight.w500);
+TextStyle struk = GoogleFonts.montserrat(
+    color: blackColor, fontSize: 13, fontWeight: FontWeight.w500);
 
 TextStyle bottomNavText =
     GoogleFonts.poppins(color: grey2Color, fontSize: 12, fontWeight: bold);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:projectmobile/notifikasi/success.dart';
 import 'package:projectmobile/theme/theme.dart';
 
 class EditProfile extends StatefulWidget {
@@ -12,7 +13,8 @@ class EditProfile extends StatefulWidget {
 class _ProfileEdit extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SafeArea(
+        child: Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(53),
         child: AppBar(
@@ -46,7 +48,16 @@ class _ProfileEdit extends State<EditProfile> {
                   SizedBox(
                       height: 35,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                Future.delayed(Duration(seconds: 2), () {
+                                  Navigator.of(context).pop(true);
+                                });
+                                return SuccesDialog();
+                              });
+                        },
                         child: Center(
                           child: Text(
                             'Simpan',
@@ -64,7 +75,7 @@ class _ProfileEdit extends State<EditProfile> {
           ],
         )
       ]),
-    );
+    ));
   }
 
   Widget buildTextField(String labelText, String placeholder) {
