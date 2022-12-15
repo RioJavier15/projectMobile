@@ -9,17 +9,19 @@ class BottomNav extends StatefulWidget {
   final String uname1;
   final String status;
   final String kecepatan;
+  final String kode_pelanggan;
   BottomNav(
       {Key? key,
       required this.uname,
       required this.uname1,
       required this.status,
-      required this.kecepatan})
+      required this.kecepatan,
+      required this.kode_pelanggan})
       : super(key: key);
 
   @override
   State<BottomNav> createState() =>
-      _BottomNavState(uname1, uname, status, kecepatan);
+      _BottomNavState(uname1, uname, status, kecepatan, kode_pelanggan);
 }
 
 class _BottomNavState extends State<BottomNav> {
@@ -27,14 +29,16 @@ class _BottomNavState extends State<BottomNav> {
   String uname1;
   String status;
   String kecepatan;
-  _BottomNavState(this.uname1, this.uname, this.status, this.kecepatan);
+  String kode_pelanggan;
+  _BottomNavState(this.uname1, this.uname, this.status, this.kecepatan,
+      this.kode_pelanggan);
   int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     final _screen = [
       HomePage(uname1, uname, status, kecepatan),
-      Riwayat(),
+      Riwayat(kode_pelanggan),
       const ProfileScreen(),
     ];
     Widget customWidget() {

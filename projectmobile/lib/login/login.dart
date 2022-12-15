@@ -58,10 +58,12 @@ class _LoginScreenState extends State<LoginScreen> {
             context,
             MaterialPageRoute(
                 builder: (context) => BottomNav(
-                    uname: msg['userInfo']['nama_produk'],
-                    status: msg['userInfo']['status'],
-                    kecepatan: msg['userInfo']['kecepatan'],
-                    uname1: msg['userInfo']['nama_pelanggan'])));
+                      uname: msg['userInfo']['nama_produk'],
+                      status: msg['userInfo']['status'],
+                      kecepatan: msg['userInfo']['kecepatan'],
+                      uname1: msg['userInfo']['nama_pelanggan'],
+                      kode_pelanggan: msg['userInfo']['kode_pelanggan'],
+                    )));
       } else {
         setState(() {
           //hide progress indicator

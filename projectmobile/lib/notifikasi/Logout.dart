@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:projectmobile/theme/theme.dart';
+import '../login/login.dart';
 
 class LogoutDialog extends StatelessWidget {
   @override
@@ -32,7 +33,12 @@ class LogoutDialog extends StatelessWidget {
                         child: Row(
                           children: [
                             ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginScreen()));
+                              },
                               child: Text('Ya'),
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: ButtonBackground,
