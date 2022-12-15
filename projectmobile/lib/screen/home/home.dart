@@ -6,19 +6,27 @@ import 'package:projectmobile/screen/home/components/whats_new_card.dart';
 import 'package:projectmobile/theme/theme.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  String nama;
+  String namaProduk;
+  String status;
+  String kecepatan;
+  HomePage(this.nama, this.namaProduk, this.status, this.kecepatan);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomePageState createState() => _HomePageState(namaProduk, status, kecepatan);
 }
 
 class _HomePageState extends State<HomePage> {
-  List cards = [
-    CardInfoHome(),
-  ];
+  String namaProduk;
+  String status;
+  String kecepatan;
+  _HomePageState(this.namaProduk, this.status, this.kecepatan);
   int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
+    List cards = [
+      CardInfoHome(namaProduk, status, kecepatan),
+    ];
     Widget headerContent(String icon, String text) {
       return Container(
         margin: EdgeInsets.only(top: 15, right: 10),
@@ -73,7 +81,7 @@ class _HomePageState extends State<HomePage> {
             Row(
               children: [
                 Text(
-                  'Lusy D',
+                  widget.nama,
                   style: boldText15.copyWith(color: blackColor),
                 ),
                 SizedBox(

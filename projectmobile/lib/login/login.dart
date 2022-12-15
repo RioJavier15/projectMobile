@@ -6,6 +6,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'body.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:projectmobile/screen/home/home.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -14,7 +17,90 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool _visible = true;
+  bool _visible = false;
+
+  //Textediting Controller for Username and Password Input
+  final userController = TextEditingController();
+  final pwdController = TextEditingController();
+
+  Future userLogin() async {
+    //Login API URL
+    //use your local IP address instead of localhost or use Web API
+    String url = "http://127.0.0.1:8080/projectWeb/API/login.php";
+
+    // Showing LinearProgressIndicator.
+    setState(() {
+      _visible = true;
+    });
+
+    // Getting username and password from Controller
+    var data = {
+      'email': userController.text,
+      'password': pwdController.text,
+    };
+
+    //Starting Web API Call.
+    var response = await http.post(Uri.parse(url), body: json.encode(data));
+    if (response.statusCode == 200) {
+      //Server response into variable
+      print(response.body);
+      var msg = jsonDecode(response.body);
+
+      //Check Login Status
+      if (msg['loginStatus'] == true) {
+        setState(() {
+          //hide progress indicator
+          _visible = false;
+        });
+
+        // Navigate to Home Screen
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => BottomNav(
+                    uname: msg['userInfo']['nama_produk'],
+                    status: msg['userInfo']['status'],
+                    kecepatan: msg['userInfo']['kecepatan'],
+                    uname1: msg['userInfo']['nama_pelanggan'])));
+      } else {
+        setState(() {
+          //hide progress indicator
+          _visible = false;
+
+          //Show Error Message Dialog
+          showMessage(msg["message"]);
+        });
+      }
+    } else {
+      setState(() {
+        //hide progress indicator
+        _visible = false;
+
+        //Show Error Message Dialog
+        showMessage("Error during connecting to Server.");
+      });
+    }
+  }
+
+  Future<void> showMessage(String _msg) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text(_msg),
+          actions: <Widget>[
+            TextButton(
+              child: new Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   final _formKey = GlobalKey<FormState>();
   Widget build(BuildContext context) {
@@ -45,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
               padding: new EdgeInsets.only(top: 40.0),
             ),
             new TextField(
-              controller: controllerEmail,
+              controller: userController,
               decoration: new InputDecoration(
                   labelText: "Email",
                   hintText: "E-mail",
@@ -56,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
               padding: new EdgeInsets.only(top: 20.0),
             ),
             new TextField(
-              controller: controllerPass,
+              controller: pwdController,
               obscureText: _visible,
               decoration: new InputDecoration(
                   labelText: "Password",
@@ -125,8 +211,8 @@ class _LoginScreenState extends State<LoginScreen> {
             style: raisedButtonStyle,
             child: Text("Sign in"),
             onPressed: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => BottomNav()));
+              userLogin();
+
               // Text('Sign in');
             },
           ),

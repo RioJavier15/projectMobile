@@ -3,7 +3,10 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:projectmobile/theme/theme.dart';
 
 class CardInfoHome extends StatelessWidget {
-  const CardInfoHome({Key? key}) : super(key: key);
+  String namaProduk;
+  String status;
+  String kecepatan;
+  CardInfoHome(this.namaProduk, this.status, this.kecepatan);
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +112,9 @@ class CardInfoHome extends StatelessWidget {
                       padding: EdgeInsets.only(
                           left: 17), //apply padding to some sides only
                       child: Text(
-                        "Paket Internet Lite",
+                        status == "aktif"
+                            ? "Paket " + namaProduk
+                            : "belum berlangganan",
                         style: mediumText17.copyWith(color: grey2Color),
                       ),
                     ),
@@ -123,7 +128,11 @@ class CardInfoHome extends StatelessWidget {
                       padding: EdgeInsets.only(
                           left: 17), //apply padding to some sides only
                       child: Text(
-                        'internet sangat kencang',
+                        status == "aktif"
+                            ? 'internet sangat kencang dengan kecepatan ' +
+                                kecepatan +
+                                " Mbps"
+                            : "hubungi admin untuk melakukan aktivasi paket internet",
                         style: mediumText12.copyWith(color: grey2Color),
                       ),
                     ),
@@ -143,7 +152,7 @@ class CardInfoHome extends StatelessWidget {
                             borderRadius: BorderRadius.circular(16.5),
                           ),
                           child: Text(
-                            'Aktif',
+                            status,
                             style: mediumText12.copyWith(color: blackColor),
                           ),
                         ),

@@ -5,21 +5,38 @@ import 'package:projectmobile/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 class BottomNav extends StatefulWidget {
-  const BottomNav({Key? key}) : super(key: key);
+  final String uname;
+  final String uname1;
+  final String status;
+  final String kecepatan;
+  BottomNav(
+      {Key? key,
+      required this.uname,
+      required this.uname1,
+      required this.status,
+      required this.kecepatan})
+      : super(key: key);
 
   @override
-  State<BottomNav> createState() => _BottomNavState();
+  State<BottomNav> createState() =>
+      _BottomNavState(uname1, uname, status, kecepatan);
 }
 
 class _BottomNavState extends State<BottomNav> {
+  String uname;
+  String uname1;
+  String status;
+  String kecepatan;
+  _BottomNavState(this.uname1, this.uname, this.status, this.kecepatan);
   int _selectedIndex = 0;
-  final _screen = [
-    HomePage(),
-    Riwayat(),  
-    const ProfileScreen(),
-  ];
+
   @override
   Widget build(BuildContext context) {
+    final _screen = [
+      HomePage(uname1, uname, status, kecepatan),
+      Riwayat(),
+      const ProfileScreen(),
+    ];
     Widget customWidget() {
       return BottomNavigationBar(
         elevation: 1,
@@ -36,7 +53,7 @@ class _BottomNavState extends State<BottomNav> {
                   child: Icon(Icons.home,
                       size: 28,
                       color: _selectedIndex == 0 ? blackColor : grey2Color)),
-              label: 'Beranda',
+              label: 'Beranda' + uname1,
               tooltip: ''),
           BottomNavigationBarItem(
               icon: Container(
