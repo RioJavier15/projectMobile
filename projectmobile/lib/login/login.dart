@@ -26,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future userLogin() async {
     //Login API URL
     //use your local IP address instead of localhost or use Web API
-    String url = "http://127.0.0.1:8080/projectWeb/API/login.php";
+    String url = "http://127.0.0.1/projectWeb/API/login.php";
 
     // Showing LinearProgressIndicator.
     setState(() {

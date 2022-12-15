@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:projectmobile/theme/theme.dart';
+import 'dart:async';
+import 'package:http/http.dart' as http;
 
 class Faq extends StatefulWidget {
   const Faq({Key? key}) : super(key: key);
@@ -10,6 +13,25 @@ class Faq extends StatefulWidget {
 }
 
 class _FaqState extends State<Faq> {
+  late List Informasi;
+  Future<String> getInformasi() async {
+    var response = await http.post(
+        Uri.http("127.0.0.1", '/projectWeb/API/faq.php', {'q': '{http}'}));
+    setState(() {
+      Informasi = json.decode(response.body);
+    });
+    return "Success!";
+  }
+
+  void initState() {
+    getInformasi();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -36,42 +58,43 @@ class _FaqState extends State<Faq> {
               ),
             ),
             body: Padding(
-              padding: EdgeInsets.only(left: 5, top: 20),
-              child: ListView.separated(
-                itemCount: faq.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return _buildExpandableTile(faq[index]);
-                },
-                separatorBuilder: (BuildContext context, int index) =>
-                    const Divider(),
-              ),
-            )));
+                padding: EdgeInsets.only(left: 5, top: 20),
+                child: FutureBuilder(
+                    future: getInformasi(),
+                    builder: (context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        return ListView.separated(
+                          itemCount: Informasi == null ? 0 : Informasi.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return ExpansionTile(
+                              title: Text(
+                                Informasi[index]["pertanyaan"],
+                                style: GoogleFonts.montserrat(
+                                    color: blackColor,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              children: <Widget>[
+                                ListTile(
+                                  title: Text(
+                                    Informasi[index]["jawaban"],
+                                    style: GoogleFonts.montserrat(
+                                        color: blackColor,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                )
+                              ],
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) =>
+                              const Divider(),
+                        );
+                      } else {
+                        return Center(
+                          child: Container(),
+                        );
+                      }
+                    }))));
   }
-
-  final List faq = [
-    {
-      "Answer": "",
-      "Question": "Bagaimana cara melakukan transaksi berlanganan ?"
-    },
-    {"Answer": "", "Question": "Apa saja produk Fans tv"}
-  ];
-}
-
-Widget _buildExpandableTile(item) {
-  return ExpansionTile(
-    title: Text(
-      item['Question'],
-      style: GoogleFonts.montserrat(
-          color: blackColor, fontSize: 15, fontWeight: FontWeight.w500),
-    ),
-    children: <Widget>[
-      ListTile(
-        title: Text(
-          item['Answer'],
-          style: GoogleFonts.montserrat(
-              color: blackColor, fontSize: 15, fontWeight: FontWeight.w600),
-        ),
-      )
-    ],
-  );
 }

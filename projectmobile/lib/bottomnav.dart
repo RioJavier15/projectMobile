@@ -57,7 +57,7 @@ class _BottomNavState extends State<BottomNav> {
                   child: Icon(Icons.home,
                       size: 28,
                       color: _selectedIndex == 0 ? blackColor : grey2Color)),
-              label: 'Beranda' + uname1,
+              label: 'Beranda',
               tooltip: ''),
           BottomNavigationBarItem(
               icon: Container(
