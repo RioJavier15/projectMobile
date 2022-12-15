@@ -9,6 +9,7 @@ import 'body.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:projectmobile/screen/home/home.dart';
+import '../env.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -26,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future userLogin() async {
     //Login API URL
     //use your local IP address instead of localhost or use Web API
-    String url = "http://127.0.0.1/projectWeb/API/login.php";
+    String url = "http://${Env.URL_PERFIX}/projectWeb/API/login.php";
 
     // Showing LinearProgressIndicator.
     setState(() {
@@ -129,38 +130,55 @@ class _LoginScreenState extends State<LoginScreen> {
                   fontWeight: FontWeight.bold,
                   fontSize: 27),
             ),
-            new Padding(
-              padding: new EdgeInsets.only(top: 40.0),
-            ),
-            new TextField(
-              controller: userController,
-              decoration: new InputDecoration(
-                  labelText: "Email",
-                  hintText: "E-mail",
-                  border: new OutlineInputBorder(
-                      borderRadius: new BorderRadius.circular(15))),
-            ),
-            new Padding(
-              padding: new EdgeInsets.only(top: 20.0),
-            ),
-            new TextField(
-              controller: pwdController,
-              obscureText: _visible,
-              decoration: new InputDecoration(
-                  labelText: "Password",
-                  hintText: "Password",
-                  border: new OutlineInputBorder(
-                      borderRadius: new BorderRadius.circular(15)),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                        _visible ? Icons.visibility : Icons.visibility_off),
-                    onPressed: () {
-                      setState(() {
-                        _visible = !_visible;
-                      });
+            new Form(
+                key: _formKey,
+                child: Column(children: <Widget>[
+                  new Padding(
+                    padding: new EdgeInsets.only(top: 40.0),
+                  ),
+                  new TextFormField(
+                    controller: userController,
+                    decoration: new InputDecoration(
+                        labelText: "Email",
+                        hintText: "E-mail",
+                        border: new OutlineInputBorder(
+                            borderRadius: new BorderRadius.circular(15))),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
                     },
-                  )),
-            ),
+                  ),
+                  new Padding(
+                    padding: new EdgeInsets.only(top: 20.0),
+                  ),
+                  new TextFormField(
+                    controller: pwdController,
+                    obscureText: _visible,
+                    decoration: new InputDecoration(
+                        labelText: "Password",
+                        hintText: "Password",
+                        border: new OutlineInputBorder(
+                            borderRadius: new BorderRadius.circular(15)),
+                        suffixIcon: IconButton(
+                          icon: Icon(_visible
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          onPressed: () {
+                            setState(() {
+                              _visible = !_visible;
+                            });
+                          },
+                        )),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                  ),
+                ])),
             new Padding(
               padding: new EdgeInsets.only(top: 20.0),
             ),
@@ -213,9 +231,12 @@ class _LoginScreenState extends State<LoginScreen> {
             style: raisedButtonStyle,
             child: Text("Sign in"),
             onPressed: () {
-              userLogin();
-
-              // Text('Sign in');
+              if (_formKey.currentState!.validate()) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Login berhasil')),
+                );
+                userLogin();
+              } // Text('Sign in');
             },
           ),
         ),

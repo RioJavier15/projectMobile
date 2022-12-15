@@ -4,6 +4,7 @@ import 'package:projectmobile/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:http/http.dart' as htpp;
+import '../../env.dart';
 
 class Riwayat extends StatefulWidget {
   String kode_pelanggan;
@@ -19,7 +20,8 @@ class _RiwayatState extends State<Riwayat> {
   late List blogdata;
   Future<String> getBlogData() async {
     var response = await htpp.post(
-        Uri.http("127.0.0.1", '/projectWeb/API/transaksi.php', {'q': '{http}'}),
+        Uri.http("${Env.URL_PERFIX}", '/projectWeb/API/transaksi.php',
+            {'q': '{http}'}),
         body: {
           "kode_pelanggan": kode_pelanggan,
         });
