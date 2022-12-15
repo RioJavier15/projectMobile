@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'package:projectmobile/screen/Riwayat/components/DetailRiwayat.dart';
 import 'package:projectmobile/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'package:http/http.dart' as htpp;
 
 class Riwayat extends StatefulWidget {
   const Riwayat({super.key});
@@ -10,74 +13,95 @@ class Riwayat extends StatefulWidget {
 }
 
 class _RiwayatState extends State<Riwayat> {
+  late List blogdata;
+  Future<String> getBlogData() async {
+    var response = await htpp.post(Uri.http(
+        "127.0.0.1", '/projectWeb/API/transaksi.php', {'q': '{http}'}));
+    setState(() {
+      blogdata = json.decode(response.body);
+    });
+    return "Success!";
+  }
+
+  void initState() {
+    getBlogData();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(53),
-        child: AppBar(
-          centerTitle: true,
-          title: Text('Riwayat Pembayaran', style: AppbarStyle),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(53),
+          child: AppBar(
+            centerTitle: true,
+            title: Text('Riwayat Pembayaran', style: AppbarStyle),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+          ),
         ),
-      ),
-      body: ListView.builder(
-        itemCount: Riwayat.length,
-        itemBuilder: (context, index) {
-          return _buildExpandableTile(Riwayat[index], context);
-        },
-      ),
-    );
+        body: FutureBuilder<String>(
+            future: getBlogData(),
+            builder: (context, AsyncSnapshot<String> snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                    itemCount: blogdata == null ? 0 : blogdata.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: Container(
+                              height: 80,
+                              child: Card(
+                                clipBehavior: Clip.antiAlias,
+                                color: ButtonBackground,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)),
+                                elevation: 10,
+                                child: InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const DetailRiwayat()));
+                                    },
+                                    child: ListTile(
+                                      title: Padding(
+                                          padding: EdgeInsets.only(bottom: 10),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                  blogdata[index]
+                                                      ["nama_pelanggan"],
+                                                  style: ButtonTextStyle),
+                                              Text(
+                                                  blogdata[index]
+                                                      ["tanggal_berlangganan"],
+                                                  style: ButtonTextStyle),
+                                            ],
+                                          )),
+                                      subtitle: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(blogdata[index]["nama_produk"],
+                                              style: ButtonTextStyle),
+                                        ],
+                                      ),
+                                    )),
+                              )));
+                    });
+              } else {
+                return Center(
+                  child: Container(),
+                );
+              }
+            }));
   }
-
-  final List Riwayat = [
-    {"Nama": "Lusy D", "Paket": "Internet Lite", "Tanggal": "30-12-2022"},
-    {"Nama": "Lusy", "Paket": "Internet Lite", "Tanggal": "28-12-2022"},
-    {"Nama": "Lusy D", "Paket": "Internet Lite", "Tanggal": "27-12-2022"},
-    {"Nama": "Lusy", "Paket": "Internet Lite", "Tanggal": "14-12-2022"},
-    {"Nama": "Lusy", "Paket": "Internet Lite", "Tanggal": "14-12-2022"},
-    {"Nama": "Lusy", "Paket": "Internet Lite", "Tanggal": "14-12-2022"},
-    {"Nama": "Lusy", "Paket": "Internet Lite", "Tanggal": "14-12-2022"},
-    {"Nama": "Lusy", "Paket": "Internet Lite", "Tanggal": "14-12-2022"},
-    {"Nama": "Lusy", "Paket": "Internet Lite", "Tanggal": "14-12-2022"},
-    {"Nama": "Lusy", "Paket": "Internet Lite", "Tanggal": "14-12-2022"},
-  ];
-}
-
-Widget _buildExpandableTile(item, BuildContext context) {
-  return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      child: Container(
-          height: 80,
-          child: Card(
-            color: ButtonBackground,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            elevation: 10,
-            child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const DetailRiwayat()));
-                },
-                child: ListTile(
-                  title: Padding(
-                      padding: EdgeInsets.only(bottom: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(item['Nama'], style: ButtonTextStyle),
-                          Text(item['Tanggal'], style: ButtonTextStyle),
-                        ],
-                      )),
-                  subtitle: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(item['Paket'], style: ButtonTextStyle),
-                    ],
-                  ),
-                )),
-          )));
 }
