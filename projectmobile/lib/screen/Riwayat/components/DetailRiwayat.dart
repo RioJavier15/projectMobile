@@ -3,7 +3,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:projectmobile/theme/theme.dart';
 
 class DetailRiwayat extends StatelessWidget {
-  const DetailRiwayat({super.key});
+  // const DetailRiwayat({super.key});
+  String nama;
+  String kode;
+  String harga;
+  String nama_produk;
+  String tanggal;
+  DetailRiwayat(
+      this.nama, this.kode, this.harga, this.nama_produk, this.tanggal);
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +83,7 @@ class DetailRiwayat extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            'Lusy D',
+                            nama,
                             textAlign: TextAlign.left,
                             style: TextLoginRegister,
                           ),
@@ -93,7 +100,7 @@ class DetailRiwayat extends StatelessWidget {
                             style: struk,
                           ),
                           Text(
-                            'Internet Lite',
+                            nama_produk,
                             style: struk,
                           )
                         ],
@@ -109,7 +116,7 @@ class DetailRiwayat extends StatelessWidget {
                             style: struk,
                           ),
                           Text(
-                            'TR000123456',
+                            kode,
                             style: struk,
                           )
                         ],
@@ -125,7 +132,7 @@ class DetailRiwayat extends StatelessWidget {
                             style: struk,
                           ),
                           Text(
-                            '200.000',
+                            harga,
                             style: struk,
                           )
                         ],
@@ -141,7 +148,7 @@ class DetailRiwayat extends StatelessWidget {
                             style: struk,
                           ),
                           Text(
-                            '28-05-2022',
+                            tanggal,
                             style: struk,
                           )
                         ],

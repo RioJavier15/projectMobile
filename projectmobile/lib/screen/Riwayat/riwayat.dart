@@ -16,7 +16,7 @@ class _RiwayatState extends State<Riwayat> {
   late List blogdata;
   Future<String> getBlogData() async {
     var response = await htpp.post(Uri.http(
-        "127.0.0.1", '/projectWeb/API/transaksi.php', {'q': '{http}'}));
+        "127.0.0.1:8080", '/projectWeb/API/transaksi.php', {'q': '{http}'}));
     setState(() {
       blogdata = json.decode(response.body);
     });
@@ -66,8 +66,16 @@ class _RiwayatState extends State<Riwayat> {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const DetailRiwayat()));
+                                              builder: (context) => DetailRiwayat(
+                                                  blogdata[index]
+                                                      ["nama_pelanggan"],
+                                                  blogdata[index]
+                                                      ["kode_transaksi"],
+                                                  blogdata[index]["total"],
+                                                  blogdata[index]
+                                                      ["nama_produk"],
+                                                  blogdata[index]
+                                                      ["tanggal_transaksi"])));
                                     },
                                     child: ListTile(
                                       title: Padding(
@@ -82,7 +90,7 @@ class _RiwayatState extends State<Riwayat> {
                                                   style: ButtonTextStyle),
                                               Text(
                                                   blogdata[index]
-                                                      ["tanggal_berlangganan"],
+                                                      ["tanggal_transaksi"],
                                                   style: ButtonTextStyle),
                                             ],
                                           )),
