@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:projectmobile/theme/theme.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
-import '../../../env.dart';
 
 class Faq extends StatefulWidget {
   const Faq({Key? key}) : super(key: key);
@@ -16,8 +15,8 @@ class Faq extends StatefulWidget {
 class _FaqState extends State<Faq> {
   late List Informasi;
   Future<String> getInformasi() async {
-    var response = await http.post(Uri.http(
-        "${Env.URL_PERFIX}", '/projectWreb/API/faq.php', {'q': '{http}'}));
+    var response = await http.post(
+        Uri.http("127.0.0.1:8080", '/projectWeb/API/faq.php', {'q': '{http}'}));
     setState(() {
       Informasi = json.decode(response.body);
     });

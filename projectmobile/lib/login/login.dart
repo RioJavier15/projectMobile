@@ -9,7 +9,6 @@ import 'body.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:projectmobile/screen/home/home.dart';
-import '../env.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -27,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future userLogin() async {
     //Login API URL
     //use your local IP address instead of localhost or use Web API
-    String url = "http://${Env.URL_PERFIX}/projectWeb/API/login.php";
+    String url = "http://127.0.0.1:8080/projectWeb/API/login.php";
 
     // Showing LinearProgressIndicator.
     setState(() {
