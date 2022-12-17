@@ -4,6 +4,10 @@ import 'package:projectmobile/screen/home/home.dart';
 import 'package:projectmobile/theme/theme.dart';
 import 'package:flutter/material.dart';
 
+extension StringCasingExtension on String {
+  String toCapitalized() => length > 0 ?'${this[0].toUpperCase()}${substring(1).toLowerCase()}':'';
+  String toTitleCase() => replaceAll(RegExp(' +'), ' ').split(' ').map((str) => str.toCapitalized()).join(' ');
+}
 class BottomNav extends StatefulWidget {
   final String uname;
   final String uname1;
@@ -48,7 +52,7 @@ class _BottomNavState extends State<BottomNav> {
     final _screen = [
       HomePage(uname1, uname, status, kecepatan),
       Riwayat(kode_pelanggan),
-      ProfileScreen(uname, uname1, status, kecepatan,
+      ProfileScreen(uname, uname1.toTitleCase(), status, kecepatan,
           kode_pelanggan, email_pelanggan, nomer_hp, password),
     ];
     Widget customWidget() {

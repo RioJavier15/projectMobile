@@ -40,8 +40,8 @@ class _ProfileEdit extends State<EditProfile> {
     final email = TextEditingController(text: widget.email_pelanggan);
     final hp = TextEditingController(text: widget.nomer_hp);
     Future editprofil() async {
-      var url = Uri.http(
-          "192.168.1.132:8080", '/projectWeb/API/editprofil.php', {'q': '{http}'});
+        var url = Uri.http(
+          "192.168.43.61:8080", '/projectWeb/API/editprofil.php', {'q': '{http}'});
       var response = await http.post(url, body: {
         "email": email.text.toString(),
         "email_user": widget.email_pelanggan,
@@ -107,15 +107,22 @@ class _ProfileEdit extends State<EditProfile> {
                       key: _formKey,
                       child: Column(children: <Widget>[
                         new Padding(
-                          padding: new EdgeInsets.only(top: 40.0),
+                          padding: const EdgeInsets.symmetric(vertical: 10),
                         ),
                         TextFormField(
+                          showCursor: true,
+                          cursorColor: blackColor,
                           controller: nama,
                           decoration: new InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(vertical: 3),
                               labelText: "Nama Lengkap",
+                              labelStyle: TextFieldStyle,
+                              floatingLabelBehavior: FloatingLabelBehavior.always,
                               hintText: widget.uname1,
-                              border: new OutlineInputBorder(
-                                  borderRadius: new BorderRadius.circular(15))),
+                              hintStyle: GoogleFonts.montserrat(
+                                  fontSize: 16, color: grey2Color, fontWeight: FontWeight.w600),
+                              focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: blackColor))),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter some text';
@@ -124,15 +131,22 @@ class _ProfileEdit extends State<EditProfile> {
                           },
                         ),
                         new Padding(
-                          padding: new EdgeInsets.only(top: 40.0),
+                          padding: const EdgeInsets.symmetric(vertical: 10),
                         ),
                         TextFormField(
+                          showCursor: true,
+                          cursorColor: blackColor,
                           controller: email,
                           decoration: new InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(vertical: 3),
                               labelText: "Email",
+                              labelStyle: TextFieldStyle,
+                              floatingLabelBehavior: FloatingLabelBehavior.always,
                               hintText: widget.email_pelanggan,
-                              border: new OutlineInputBorder(
-                                  borderRadius: new BorderRadius.circular(15))),
+                              hintStyle: GoogleFonts.montserrat(
+                                  fontSize: 16, color: grey2Color, fontWeight: FontWeight.w600),
+                              focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: blackColor))),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter some text';
@@ -143,16 +157,23 @@ class _ProfileEdit extends State<EditProfile> {
                           },
                         ),
                         new Padding(
-                          padding: new EdgeInsets.only(top: 40.0),
+                          padding: const EdgeInsets.symmetric(vertical: 10),
                         ),
                         TextFormField(
+                          showCursor: true,
+                          cursorColor: blackColor,
                           controller: hp,
                           keyboardType: TextInputType.number,
                           decoration: new InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(vertical: 3),
                               labelText: "Nomer HP",
+                              labelStyle: TextFieldStyle,
+                              floatingLabelBehavior: FloatingLabelBehavior.always,
                               hintText: widget.nomer_hp,
-                              border: new OutlineInputBorder(
-                                  borderRadius: new BorderRadius.circular(15))),
+                              hintStyle: GoogleFonts.montserrat(
+                                  fontSize: 16, color: grey2Color, fontWeight: FontWeight.w600),
+                              focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: blackColor))),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter some text';

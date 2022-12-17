@@ -16,7 +16,7 @@ class _FaqState extends State<Faq> {
   late List Informasi;
   Future<String> getInformasi() async {
     var response = await http.post(
-        Uri.http("192.168.1.132:8080", '/projectWeb/API/faq.php', {'q': '{http}'}));
+        Uri.http("192.168.43.61:8080", '/projectWeb/API/faq.php', {'q': '{http}'}));
     setState(() {
       Informasi = json.decode(response.body);
     });

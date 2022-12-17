@@ -86,7 +86,14 @@ class _ProfileScreen extends State<ProfileScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const EditPassword()),
+                            builder: (context) =>  EditPassword(uname: widget.uname,
+                                uname1: widget.uname1,
+                                status: widget.status,
+                                kecepatan: widget.kecepatan,
+                                kode_pelanggan: widget.kode_pelanggan,
+                                email_pelanggan: widget.email_pelanggan,
+                                nomer_hp: widget.nomer_hp,
+                                password: widget.password)),
                       );
                     },
                   ),
