@@ -7,7 +7,16 @@ import 'package:projectmobile/screen/Profile/components/faq.dart';
 import 'package:projectmobile/theme/theme.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  String uname;
+  String uname1;
+  String status;
+  String kecepatan;
+  String kode_pelanggan;
+  String email_pelanggan;
+  String nomer_hp;
+  String password;
+  ProfileScreen(this.uname, this.uname1, this.status, this.kecepatan,
+      this.kode_pelanggan, this.email_pelanggan, this.nomer_hp, this.password);
   @override
   _ProfileScreen createState() => _ProfileScreen();
 }
@@ -28,7 +37,28 @@ class _ProfileScreen extends State<ProfileScreen> {
             body: ListView(children: [
               Column(
                 children: [
-                  const ProfilePic(),
+            Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 5),
+            child: Column(
+              children: [
+                CircleAvatar(
+                  child: Text(
+                    widget.uname1[0],
+                    style: GoogleFonts.montserrat(
+                        fontSize: 30, fontWeight: FontWeight.w600),
+                  ),
+                  radius: 40,
+                  backgroundColor: ButtonBackground,
+                ),
+                Padding(padding: EdgeInsets.symmetric(vertical: 5, horizontal: 24)),
+                Text(
+                  widget.uname1,
+                  style: GoogleFonts.montserrat(
+                      fontSize: 20, fontWeight: FontWeight.w600, color: blackColor),
+                  textAlign: TextAlign.right,
+                ),
+              ],
+            )),
                   const Padding(padding: EdgeInsets.all(5)),
                   ProfileMenu(
                     text: 'Edit Profile',
@@ -37,7 +67,15 @@ class _ProfileScreen extends State<ProfileScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const EditProfile()),
+                            builder: (context) => EditProfile(
+                                uname: widget.uname,
+                                uname1: widget.uname1,
+                                status: widget.status,
+                                kecepatan: widget.kecepatan,
+                                kode_pelanggan: widget.kode_pelanggan,
+                                email_pelanggan: widget.email_pelanggan,
+                                nomer_hp: widget.nomer_hp,
+                                password: widget.password)),
                       );
                     },
                   ),
@@ -118,32 +156,4 @@ class ProfileMenu extends StatelessWidget {
   }
 }
 
-class ProfilePic extends StatelessWidget {
-  const ProfilePic({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 5),
-        child: Column(
-          children: [
-            CircleAvatar(
-              child: Text(
-                'Lusy D'[0],
-                style: GoogleFonts.montserrat(
-                    fontSize: 30, fontWeight: FontWeight.w600),
-              ),
-              radius: 40,
-              backgroundColor: ButtonBackground,
-            ),
-            Padding(padding: EdgeInsets.symmetric(vertical: 5, horizontal: 24)),
-            Text(
-              'Lusy D',
-              style: GoogleFonts.montserrat(
-                  fontSize: 20, fontWeight: FontWeight.w600, color: blackColor),
-              textAlign: TextAlign.right,
-            ),
-          ],
-        ));
-  }
-}

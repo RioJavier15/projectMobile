@@ -20,7 +20,7 @@ class _FormRegisterState extends State<Register> {
   TextEditingController controllerHp = TextEditingController();
   Future register() async {
     var url = Uri.http(
-        "127.0.0.1:8080", '/projectWeb/API/register.php', {'q': '{http}'});
+        "192.168.1.132:8080", '/projectWeb/API/register.php', {'q': '{http}'});
     var response = await http.post(url, body: {
       "email": controllerEmail.text.toString(),
       "password": controllerPass.text.toString(),

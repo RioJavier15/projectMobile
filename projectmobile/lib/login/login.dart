@@ -26,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future userLogin() async {
     //Login API URL
     //use your local IP address instead of localhost or use Web API
-    String url = "http://127.0.0.1:8080/projectWeb/API/login.php";
+    String url = "http://192.168.1.132:8080/projectWeb/API/login.php";
 
     // Showing LinearProgressIndicator.
     setState(() {
@@ -58,12 +58,15 @@ class _LoginScreenState extends State<LoginScreen> {
             context,
             MaterialPageRoute(
                 builder: (context) => BottomNav(
-                      uname: msg['userInfo']['nama_produk'],
-                      status: msg['userInfo']['status'],
-                      kecepatan: msg['userInfo']['kecepatan'],
-                      uname1: msg['userInfo']['nama_pelanggan'],
-                      kode_pelanggan: msg['userInfo']['kode_pelanggan'],
-                    )));
+                  uname: msg['userInfo']['nama_produk'],
+                  uname1: msg['userInfo']['nama_pelanggan'],
+                  status: msg['userInfo']['status'],
+                  kecepatan: msg['userInfo']['kecepatan'],
+                  kode_pelanggan: msg['userInfo']['kode_pelanggan'],
+                  email_pelanggan: msg['userInfo']['email_pelanggan'],
+                  nomer_hp: msg['userInfo']['nomer_hp'],
+                  password: msg['userInfo']['password'],
+                )));
       } else {
         setState(() {
           //hide progress indicator
@@ -129,55 +132,38 @@ class _LoginScreenState extends State<LoginScreen> {
                   fontWeight: FontWeight.bold,
                   fontSize: 27),
             ),
-            new Form(
-                key: _formKey,
-                child: Column(children: <Widget>[
-                  new Padding(
-                    padding: new EdgeInsets.only(top: 40.0),
-                  ),
-                  new TextFormField(
-                    controller: userController,
-                    decoration: new InputDecoration(
-                        labelText: "Email",
-                        hintText: "E-mail",
-                        border: new OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(15))),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      return null;
+            new Padding(
+              padding: new EdgeInsets.only(top: 40.0),
+            ),
+            new TextField(
+              controller: userController,
+              decoration: new InputDecoration(
+                  labelText: "Email",
+                  hintText: "E-mail",
+                  border: new OutlineInputBorder(
+                      borderRadius: new BorderRadius.circular(15))),
+            ),
+            new Padding(
+              padding: new EdgeInsets.only(top: 20.0),
+            ),
+            new TextField(
+              controller: pwdController,
+              obscureText: _visible,
+              decoration: new InputDecoration(
+                  labelText: "Password",
+                  hintText: "Password",
+                  border: new OutlineInputBorder(
+                      borderRadius: new BorderRadius.circular(15)),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                        _visible ? Icons.visibility : Icons.visibility_off),
+                    onPressed: () {
+                      setState(() {
+                        _visible = !_visible;
+                      });
                     },
-                  ),
-                  new Padding(
-                    padding: new EdgeInsets.only(top: 20.0),
-                  ),
-                  new TextFormField(
-                    controller: pwdController,
-                    obscureText: _visible,
-                    decoration: new InputDecoration(
-                        labelText: "Password",
-                        hintText: "Password",
-                        border: new OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(15)),
-                        suffixIcon: IconButton(
-                          icon: Icon(_visible
-                              ? Icons.visibility
-                              : Icons.visibility_off),
-                          onPressed: () {
-                            setState(() {
-                              _visible = !_visible;
-                            });
-                          },
-                        )),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      return null;
-                    },
-                  ),
-                ])),
+                  )),
+            ),
             new Padding(
               padding: new EdgeInsets.only(top: 20.0),
             ),
@@ -230,12 +216,9 @@ class _LoginScreenState extends State<LoginScreen> {
             style: raisedButtonStyle,
             child: Text("Sign in"),
             onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Login berhasil')),
-                );
-                userLogin();
-              } // Text('Sign in');
+              userLogin();
+
+              // Text('Sign in');
             },
           ),
         ),
