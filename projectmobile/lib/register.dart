@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'login/login.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:projectmobile/env.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class _FormRegisterState extends State<Register> {
   TextEditingController controllerHp = TextEditingController();
   Future register() async {
     var url = Uri.http(
-        "192.168.1.132:8080", '/projectWeb/API/register.php', {'q': '{http}'});
+        "${Env.URL_PERFIX}", '/projectWeb/API/register.php', {'q': '{http}'});
     var response = await http.post(url, body: {
       "email": controllerEmail.text.toString(),
       "password": controllerPass.text.toString(),

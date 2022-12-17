@@ -5,6 +5,7 @@ import 'package:projectmobile/theme/theme.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:projectmobile/bottomnav.dart';
+import 'package:projectmobile/env.dart';
 
 class EditPassword extends StatefulWidget {
   final String uname;
@@ -40,7 +41,7 @@ class _EditPassword extends State<EditPassword> {
   Widget build(BuildContext context) {
     Future editpass() async {
       var url = Uri.http(
-          "192.168.43.61:8080", '/projectWeb/API/editpw.php', {'q': '{http}'});
+          "${Env.URL_PERFIX}", '/projectWeb/API/editpw.php', {'q': '{http}'});
       var response = await http.post(url, body: {
         "password": pass.text.toString(),
         "kode": widget.kode_pelanggan,

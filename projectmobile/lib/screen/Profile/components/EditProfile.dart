@@ -6,6 +6,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:projectmobile/bottomnav.dart';
+import 'package:projectmobile/env.dart';
 
 class EditProfile extends StatefulWidget {
   final String uname;
@@ -41,7 +42,7 @@ class _ProfileEdit extends State<EditProfile> {
     final hp = TextEditingController(text: widget.nomer_hp);
     Future editprofil() async {
         var url = Uri.http(
-          "192.168.43.61:8080", '/projectWeb/API/editprofil.php', {'q': '{http}'});
+          "${Env.URL_PERFIX}", '/projectWeb/API/editprofil.php', {'q': '{http}'});
       var response = await http.post(url, body: {
         "email": email.text.toString(),
         "email_user": widget.email_pelanggan,
