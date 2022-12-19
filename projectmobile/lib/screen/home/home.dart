@@ -1,275 +1,396 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:projectmobile/screen/home/components/card_info_home.dart';
-import 'package:projectmobile/screen/home/components/rekomendasi_card.dart';
-import 'package:projectmobile/screen/home/components/whats_new_card.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:projectmobile/screen/home/model/clipper.dart';
+import 'package:projectmobile/screen/home/model/contact.dart';
 import 'package:projectmobile/theme/theme.dart';
+import 'package:http/http.dart' as http;
 
-class HomePage extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   String nama;
   String namaProduk;
   String status;
   String kecepatan;
-  HomePage(this.nama, this.namaProduk, this.status, this.kecepatan);
+  HomeScreen(this.nama, this.namaProduk, this.status, this.kecepatan);
 
   @override
-  _HomePageState createState() => _HomePageState(namaProduk, status, kecepatan);
+  State<HomeScreen> createState() =>
+      _HomeScreenState(nama, namaProduk, status, kecepatan);
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeScreenState extends State<HomeScreen> {
+  String nama;
   String namaProduk;
   String status;
   String kecepatan;
-  _HomePageState(this.namaProduk, this.status, this.kecepatan);
-  int currentIndex = 0;
+  _HomeScreenState(this.nama, this.namaProduk, this.status, this.kecepatan);
+  late List produk;
+  Future<String> getproduk() async {
+    var response = await http.post(
+        Uri.http("127.0.0.1", '/projectWeb/API/produk.php', {'q': '{http}'}));
+    setState(() {
+      produk = json.decode(response.body);
+    });
+    return "Success!";
+  }
+
+  void initState() {
+    getproduk();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    List cards = [
-      CardInfoHome(namaProduk, status, kecepatan),
-    ];
-    Widget headerContent(String icon, String text) {
-      return Container(
-        margin: EdgeInsets.only(top: 15, right: 10),
-        padding: EdgeInsets.fromLTRB(8, 5, 2, 5),
-        decoration: BoxDecoration(
-          color: primaryColor,
-          borderRadius: BorderRadius.all(
-            Radius.circular(10),
-          ),
-        ),
-        child: Row(
+    final date = DateTime.now();
+    final tanggal = DateTime(date.year, date.month + 1, 1);
+    final Duration durasi = tanggal.difference(date);
+    return SafeArea(
+        child: Scaffold(
+      backgroundColor: primaryColor,
+      body: Container(
+        child: ListView(
+          physics: ClampingScrollPhysics(),
           children: [
-            Image.asset(
-              icon,
-              width: 10,
+            Padding(
+                padding: EdgeInsets.only(left: 24, top: 24, bottom: 20),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          'Hi, Welcome',
+                          style: GoogleFonts.nunito(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                            color: blackColor,
+                          ),
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          nama,
+                          style: GoogleFonts.nunito(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                            color: blackColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                )),
+            //kotak tengah
+            Container(
+              height: 230,
+              child: ListView(
+                  padding: EdgeInsets.only(left: 24, right: 24),
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(right: 8),
+                      height: 230,
+                      width: 220,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Navy2Color,
+                          boxShadow: [
+                            BoxShadow(
+                                color: Color(0x10000000),
+                                blurRadius: 10,
+                                spreadRadius: 4,
+                                offset: Offset(0.0, 8.0))
+                          ]),
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 15, bottom: 5),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  left: 17), //apply padding to some sides only
+                              child: Text(
+                                status == "aktif"
+                                    ? "Paket " + namaProduk
+                                    : "belum berlangganan",
+                                style: mediumText17.copyWith(color: grey2Color),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  left: 17), //apply padding to some sides only
+                              child: Text(
+                                'Deskripsi: ',
+                                style: mediumText12.copyWith(color: grey2Color),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  left: 17), //apply padding to some sides only
+                              child: Text(
+                                status == "aktif"
+                                    ? 'internet sangat kencang dengan kecepatan ' +
+                                        kecepatan +
+                                        " Mbps"
+                                    : "hubungi admin untuk melakukan aktivasi paket internet",
+                                style: mediumText12.copyWith(color: grey2Color),
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      right: 25, bottom: 15, top: 20),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 7, horizontal: 19),
+                                  decoration: BoxDecoration(
+                                    color: grey2Color,
+                                    borderRadius: BorderRadius.circular(16.5),
+                                  ),
+                                  child: Text(
+                                    status,
+                                    style: mediumText12.copyWith(
+                                        color: blackColor),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Divider(
+                              color: grey2Color,
+                              thickness: 4,
+                            ),
+                            Padding(
+                                padding: EdgeInsets.only(
+                                    left: 17,
+                                    top: 15), //apply padding to some sides only
+                                child: Row(
+                                  children: [
+                                    circularPercent(0.9),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                              'Tenggat Bayar',
+                                              style: mediumText13.copyWith(
+                                                  color: grey2Color),
+                                            )
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(children: [
+                                                    Image.asset(
+                                                      'assets/icons/icon-warning.png',
+                                                      width: 13,
+                                                    ),
+                                                    const SizedBox(
+                                                      width: 5,
+                                                    ),
+                                                    Text(
+                                                      status == "aktif"
+                                                          ? "${durasi.inDays}" +
+                                                              ' hari lagi'
+                                                          : "-",
+                                                      style:
+                                                          mediumText10.copyWith(
+                                                              color: grey2Color,
+                                                              letterSpacing:
+                                                                  0.2),
+                                                    ),
+                                                  ]),
+                                                  Text(
+                                                    status == "aktif"
+                                                        ? 'Sebelum tanggal ' +
+                                                            "${tanggal.day} - " +
+                                                            "${tanggal.month} - " +
+                                                            "${tanggal.year}"
+                                                        : "",
+                                                    style:
+                                                        mediumText10.copyWith(
+                                                            color: grey2Color,
+                                                            letterSpacing: 0.2),
+                                                  )
+                                                ])
+                                          ],
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ))
+                          ],
+                        ),
+                      ),
+                    )
+                  ]),
             ),
-            SizedBox(
-              width: 10,
+            //bagian bawah 1
+            Padding(
+              padding:
+                  EdgeInsets.only(left: 24, top: 32, bottom: 16, right: 24),
+              child: Row(
+                children: [
+                  Text(
+                    'Rekomendasi Untukmu',
+                    style: GoogleFonts.nunito(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: blackColor,
+                    ),
+                  ),
+                ],
+              ),
             ),
-            Text(
-              text,
-              style: boldText13.copyWith(color: primaryColor),
+            Container(
+              height: 131,
+              child: FutureBuilder(
+                future: getproduk(),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                      padding: EdgeInsets.only(left: 16, right: 8),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: produk == null ? 0 : produk.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                          margin: EdgeInsets.only(right: 8),
+                          height: 131,
+                          width: 284,
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.vertical(top: Radius.circular(14)),
+                            color: grey2Color,
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Color(0x04000000),
+                                  blurRadius: 1,
+                                  spreadRadius: 10,
+                                  offset: Offset(0.0, 1.0))
+                            ],
+                          ),
+                          child: Stack(
+                            children: [
+                              ClipPath(
+                                clipper: BackgroundClipper(),
+                                child: Container(
+                                  padding: EdgeInsets.only(left: 11, top: 2),
+                                  height: 18,
+                                  width: 90,
+                                  decoration: BoxDecoration(
+                                    color: NavyColor,
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(14),
+                                    ),
+                                  ),
+                                  child: Text('Buy it again',
+                                      style: mediumText9.copyWith(
+                                        color: primaryColor,
+                                        letterSpacing: 0.2,
+                                      )),
+                                ),
+                              ),
+                              Positioned(
+                                  top: 27,
+                                  left: 18,
+                                  child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          produk[index]["nama_produk"],
+                                          style: mediumText12.copyWith(
+                                            color: NavyColor,
+                                            letterSpacing: 0.3,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text(
+                                          produk[index]["kecepatan"] + " Mbps",
+                                          style: mediumText15.copyWith(
+                                            color: NavyColor,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 15,
+                                        ),
+                                        Text(
+                                          produk[index]["harga_produk"],
+                                          style: boldText14.copyWith(
+                                            color: NavyColor,
+                                          ),
+                                        )
+                                      ]))
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  } else {
+                    return Container(
+                      color: primaryColor,
+                    );
+                  }
+                },
+              ),
             ),
-            Icon(
-              Icons.chevron_right_rounded,
-              color: primaryColor,
+            // kotak bawah2
+            Padding(
+              padding:
+                  EdgeInsets.only(left: 24, top: 32, bottom: 16, right: 24),
+              child: Text(
+                'Contact Person',
+                style: GoogleFonts.nunito(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: blackColor,
+                ),
+              ),
+            ),
+            Container(
+              height: 250,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.only(left: 16, right: 10),
+                children: [
+                  Row(
+                    children: [
+                      ContactPerson(
+                          image: "assets/images/video-subscription.png",
+                          text: "Hubungi",
+                          title: "Admin Fans TV"),
+                      SizedBox(
+                        width: 16,
+                      ),
+                      ContactPerson(
+                          image: "assets/images/poin-image.png",
+                          text: "Hubungi",
+                          title: "Teknisi Fans TV"),
+                    ],
+                  )
+                ],
+              ),
             )
           ],
         ),
-      );
-    }
-
-    //pojok atas home
-    Widget header() {
-      return Container(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-        child: Column(
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  'Home, Welcome',
-                  style: boldText15.copyWith(color: blackColor),
-                ),
-                Spacer(),
-              ],
-            ),
-            SizedBox(
-              height: 3,
-            ),
-            Row(
-              children: [
-                Text(
-                  widget.nama,
-                  style: boldText15.copyWith(color: blackColor),
-                ),
-                SizedBox(
-                  width: 7,
-                ),
-                // Image.asset('assets/icons/icon-add.png', width: 14),
-              ],
-            ),
-          ],
-        ),
-      );
-    }
-
-    // Widget indicator(int index) {
-    //   return Container(
-    //     width: currentIndex == index ? 18 : 5,
-    //     height: 5,
-    //     margin: EdgeInsets.symmetric(horizontal: 2),
-    //     decoration: BoxDecoration(
-    //         color: currentIndex == index
-    //             ? birutuaColor
-    //             : whiteColor.withOpacity(0.7),
-    //         borderRadius: BorderRadius.circular(4)),
-    //   );
-    // }
-
-    Widget cardInfo() {
-      int index = -1;
-      return Column(
-        children: [
-          CarouselSlider(
-            items: cards
-                .map<Widget>((card) => Container(
-                      child: card,
-                    ))
-                .toList(),
-            options: CarouselOptions(
-              viewportFraction: 1,
-              height: 250,
-              enableInfiniteScroll: false,
-              initialPage: 0,
-              onPageChanged: (index, reason) {
-                setState(() {
-                  currentIndex = index;
-                });
-              },
-            ),
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: cards.map((e) {
-          //     index += 1;
-          //     return indicator(index);
-          //   }).toList(),
-          // )
-        ],
-      );
-    }
-
-    //rekomendasi untukmu
-    Widget recomendedForYou() {
-      return Column(
-        children: [
-          Container(
-            margin: EdgeInsets.only(left: 16, top: 15, right: 16),
-            child: Row(
-              children: [
-                Text('Rekomendasi Untukmu',
-                    style: nunitoExtraBoldText18.copyWith(
-                      color: primaryColor,
-                    )),
-              ],
-            ),
-          ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              children: [
-                RekomendasiCard(
-                  title: 'Paket Lite',
-                  kecepatan: '10 Mbps',
-                  price: 'Rp 100,000',
-                ),
-                SizedBox(
-                  width: 16,
-                ),
-                RekomendasiCard(
-                  title: 'Internet Dedicated',
-                  kecepatan: '20 Mbps',
-                  price: 'Rp 150,000',
-                ),
-              ],
-            ),
-          )
-        ],
-      );
-    }
-
-    Widget whatsNew() {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 16, bottom: 14),
-            child: Text(
-              'Contact Person',
-              style: nunitoExtraBoldText18,
-            ),
-          ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              children: [
-                WhatsNewCard(
-                  image: 'assets/images/video-subscription.png',
-                  text: 'Hubungi',
-                  title: 'Admin Fans TV',
-                ),
-                SizedBox(
-                  width: 16,
-                ),
-                WhatsNewCard(
-                  image: 'assets/images/poin-image.png',
-                  text: 'Hubungi',
-                  title: 'Teknisi Fans TV',
-                ),
-              ],
-            ),
-          ),
-        ],
-      );
-    }
-
-    Widget content() {
-      //kotak bawah
-      return Container(
-        margin: EdgeInsets.only(top: 5),
-        decoration: BoxDecoration(
-          color: Navy2Color,
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(20),
-          ),
-        ),
-        child: Column(
-          children: [
-            recomendedForYou(),
-            whatsNew(),
-          ],
-        ),
-      );
-    }
-
-    //background home
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.topRight,
-            stops: [0.1, 0.8, 1],
-            colors: [primaryColor, primaryColor, primaryColor],
-          ),
-        ),
-        child: ScrollConfiguration(
-          behavior: MyBehaviour(),
-          child: ListView(
-            children: [
-              header(),
-              cardInfo(),
-              content(),
-            ],
-          ),
-        ),
       ),
-    );
-  }
-}
-
-class MyBehaviour extends ScrollBehavior {
-  @override
-  Widget buildViewportChrome(
-      BuildContext context, Widget child, AxisDirection axisDirection) {
-    return child;
+    ));
   }
 }

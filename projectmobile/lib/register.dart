@@ -102,10 +102,16 @@ class _FormRegisterState extends State<Register> {
                 children: <Widget>[
                   // Add TextFormFields and ElevatedButton here.
                   new TextFormField(
+                    showCursor: true,
+                    cursorColor: blackColor,
                     controller: controllerEmail,
                     decoration: new InputDecoration(
                         labelText: "E-mail",
                         hintText: "E-mail",
+                        labelStyle: TextProfileStyle,
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: blackColor),
+                            borderRadius: new BorderRadius.circular(15)),
                         border: new OutlineInputBorder(
                             borderRadius: new BorderRadius.circular(15))),
                     validator: (value) {
@@ -121,10 +127,16 @@ class _FormRegisterState extends State<Register> {
                     padding: new EdgeInsets.only(top: 20.0),
                   ),
                   new TextFormField(
+                    showCursor: true,
+                    cursorColor: blackColor,
                     controller: controllerNama,
                     decoration: new InputDecoration(
                         labelText: "Nama Lengkap",
                         hintText: "Nama Lengkap",
+                        labelStyle: TextProfileStyle,
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: blackColor),
+                            borderRadius: new BorderRadius.circular(15)),
                         border: new OutlineInputBorder(
                             borderRadius: new BorderRadius.circular(15))),
                     validator: (value) {
@@ -138,11 +150,17 @@ class _FormRegisterState extends State<Register> {
                     padding: new EdgeInsets.only(top: 20.0),
                   ),
                   new TextFormField(
+                    showCursor: true,
+                    cursorColor: blackColor,
                     controller: controllerPass,
                     obscureText: _visible,
                     decoration: new InputDecoration(
                         labelText: "Password",
                         hintText: "Password",
+                        labelStyle: TextProfileStyle,
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: blackColor),
+                            borderRadius: new BorderRadius.circular(15)),
                         border: new OutlineInputBorder(
                             borderRadius: new BorderRadius.circular(15)),
                         suffixIcon: IconButton(
@@ -166,11 +184,17 @@ class _FormRegisterState extends State<Register> {
                     padding: new EdgeInsets.only(top: 20.0),
                   ),
                   new TextFormField(
+                    showCursor: true,
+                    cursorColor: blackColor,
                     controller: controllerHp,
                     keyboardType: TextInputType.number,
                     decoration: new InputDecoration(
                         labelText: "Nomer telepon",
                         hintText: "Nomer telepon",
+                        labelStyle: TextProfileStyle,
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: blackColor),
+                            borderRadius: new BorderRadius.circular(15)),
                         border: new OutlineInputBorder(
                             borderRadius: new BorderRadius.circular(15))),
                     validator: (value) {

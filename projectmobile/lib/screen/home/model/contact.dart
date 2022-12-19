@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:projectmobile/theme/theme.dart';
 
-class WhatsNewCard extends StatelessWidget {
-  const WhatsNewCard({
+class ContactPerson extends StatelessWidget {
+  const ContactPerson({
     Key? key,
     required this.image,
     required this.text,
@@ -42,7 +42,7 @@ class WhatsNewCard extends StatelessWidget {
         ),
         Text(
           title,
-          style: boldText14.copyWith(color: primaryColor),
+          style: boldText14.copyWith(color: blackColor),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),

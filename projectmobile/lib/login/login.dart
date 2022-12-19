@@ -59,15 +59,15 @@ class _LoginScreenState extends State<LoginScreen> {
             context,
             MaterialPageRoute(
                 builder: (context) => BottomNav(
-                  uname: msg['userInfo']['nama_produk'],
-                  uname1: msg['userInfo']['nama_pelanggan'],
-                  status: msg['userInfo']['status'],
-                  kecepatan: msg['userInfo']['kecepatan'],
-                  kode_pelanggan: msg['userInfo']['kode_pelanggan'],
-                  email_pelanggan: msg['userInfo']['email_pelanggan'],
-                  nomer_hp: msg['userInfo']['nomer_hp'],
-                  password: msg['userInfo']['password'],
-                )));
+                      uname: msg['userInfo']['nama_produk'],
+                      uname1: msg['userInfo']['nama_pelanggan'],
+                      status: msg['userInfo']['status'],
+                      kecepatan: msg['userInfo']['kecepatan'],
+                      kode_pelanggan: msg['userInfo']['kode_pelanggan'],
+                      email_pelanggan: msg['userInfo']['email_pelanggan'],
+                      nomer_hp: msg['userInfo']['nomer_hp'],
+                      password: msg['userInfo']['password'],
+                    )));
       } else {
         setState(() {
           //hide progress indicator
@@ -137,22 +137,37 @@ class _LoginScreenState extends State<LoginScreen> {
               padding: new EdgeInsets.only(top: 40.0),
             ),
             new TextField(
+              showCursor: true,
+              cursorColor: blackColor,
               controller: userController,
               decoration: new InputDecoration(
                   labelText: "Email",
+                  labelStyle: TextProfileStyle,
                   hintText: "E-mail",
+                  focusColor: blackColor,
+                  fillColor: blackColor,
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: blackColor),
+                      borderRadius: new BorderRadius.circular(15)),
                   border: new OutlineInputBorder(
+                      borderSide: BorderSide(color: blackColor),
                       borderRadius: new BorderRadius.circular(15))),
             ),
             new Padding(
               padding: new EdgeInsets.only(top: 20.0),
             ),
             new TextField(
+              showCursor: true,
+              cursorColor: blackColor,
               controller: pwdController,
               obscureText: _visible,
               decoration: new InputDecoration(
                   labelText: "Password",
                   hintText: "Password",
+                  labelStyle: TextProfileStyle,
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: blackColor),
+                      borderRadius: new BorderRadius.circular(15)),
                   border: new OutlineInputBorder(
                       borderRadius: new BorderRadius.circular(15)),
                   suffixIcon: IconButton(
