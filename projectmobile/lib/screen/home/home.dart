@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:projectmobile/screen/home/model/clipper.dart';
 import 'package:projectmobile/screen/home/model/contact.dart';
+import 'package:projectmobile/screen/home/model/Kontak.dart';
 import 'package:projectmobile/theme/theme.dart';
+import 'package:projectmobile/env.dart';
 import 'package:http/http.dart' as http;
 
 class HomeScreen extends StatefulWidget {
@@ -26,8 +28,8 @@ class _HomeScreenState extends State<HomeScreen> {
   _HomeScreenState(this.nama, this.namaProduk, this.status, this.kecepatan);
   late List produk;
   Future<String> getproduk() async {
-    var response = await http.post(
-        Uri.http("127.0.0.1", '/projectWeb/API/produk.php', {'q': '{http}'}));
+    var response = await http.post(Uri.http(
+        "${Env.URL_PERFIX}", '/projectWeb/API/produk.php', {'q': '{http}'}));
     setState(() {
       produk = json.decode(response.body);
     });
@@ -379,7 +381,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(
                         width: 16,
                       ),
-                      ContactPerson(
+                      ContactAdmin(
                           image: "assets/images/poin-image.png",
                           text: "Hubungi",
                           title: "Teknisi Fans TV"),

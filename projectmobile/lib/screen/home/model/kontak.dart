@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:projectmobile/theme/theme.dart';
 
-class ContactPerson extends StatelessWidget {
-  const ContactPerson({
+class ContactAdmin extends StatelessWidget {
+  const ContactAdmin({
     Key? key,
     required this.image,
     required this.text,
