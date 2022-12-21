@@ -3,6 +3,7 @@ import 'package:projectmobile/screen/Riwayat/riwayat.dart';
 import 'package:projectmobile/screen/home/home.dart';
 import 'package:projectmobile/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 extension StringCasingExtension on String {
   String toCapitalized() =>
@@ -14,51 +15,50 @@ extension StringCasingExtension on String {
 }
 
 class BottomNav extends StatefulWidget {
-  final String uname;
-  final String uname1;
-  final String status;
-  final String kecepatan;
-  final String kode_pelanggan;
-  final String email_pelanggan;
-  final String nomer_hp;
-  final String password;
-  BottomNav({
-    Key? key,
-    required this.uname,
-    required this.uname1,
-    required this.status,
-    required this.kecepatan,
-    required this.kode_pelanggan,
-    required this.email_pelanggan,
-    required this.nomer_hp,
-    required this.password,
-  }) : super(key: key);
-
+  const BottomNav({Key? key}) : super(key: key);
   @override
-  State<BottomNav> createState() => _BottomNavState(uname, uname1, status,
-      kecepatan, kode_pelanggan, email_pelanggan, nomer_hp, password);
+  State<BottomNav> createState() => _BottomNavState();
 }
 
 class _BottomNavState extends State<BottomNav> {
-  String uname;
-  String uname1;
-  String status;
-  String kecepatan;
-  String kode_pelanggan;
-  String email_pelanggan;
-  String nomer_hp;
-  String password;
-  _BottomNavState(this.uname, this.uname1, this.status, this.kecepatan,
-      this.kode_pelanggan, this.email_pelanggan, this.nomer_hp, this.password);
+  String uname = "";
+  String uname1 = "";
+  String status = "";
+  String kecepatan = "";
+  String kode_pelanggan = "";
+  String email_pelanggan = "";
+  String nomer_hp = "";
+  String password = "";
+
   int _selectedIndex = 0;
+
+  Future getkode() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      kode_pelanggan = (prefs.getString('kode_pelanggan') ?? "");
+      uname = (prefs.getString('nama_produk') ?? "");
+      uname1 = (prefs.getString('nama_pelanggan') ?? "");
+      status = (prefs.getString('status') ?? "");
+      kecepatan = (prefs.getString('kecepatan') ?? "");
+      email_pelanggan = (prefs.getString('email_pelanggan') ?? "");
+      nomer_hp = (prefs.getString('nomer_hp') ?? "");
+      password = (prefs.getString('password') ?? "");
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getkode();
+  }
 
   @override
   Widget build(BuildContext context) {
     final _screen = [
-      HomeScreen(uname1, uname, status, kecepatan),
-      Riwayat(kode_pelanggan),
-      ProfileScreen(uname, uname1.toTitleCase(), status, kecepatan,
-          kode_pelanggan, email_pelanggan, nomer_hp, password),
+      const HomeScreen(),
+      const Riwayat(),
+      const ProfileScreen(),
     ];
     Widget customWidget() {
       return BottomNavigationBar(

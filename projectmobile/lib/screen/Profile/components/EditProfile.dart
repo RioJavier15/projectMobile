@@ -7,48 +7,52 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:projectmobile/bottomnav.dart';
 import 'package:projectmobile/env.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EditProfile extends StatefulWidget {
-  final String uname;
-  final String uname1;
-  final String status;
-  final String kecepatan;
-  final String kode_pelanggan;
-  final String email_pelanggan;
-  final String nomer_hp;
-  final String password;
-  EditProfile({
-    Key? key,
-    required this.uname,
-    required this.uname1,
-    required this.status,
-    required this.kecepatan,
-    required this.kode_pelanggan,
-    required this.email_pelanggan,
-    required this.nomer_hp,
-    required this.password,
-  }) : super(key: key);
+  const EditProfile({Key? key}) : super(key: key);
 
   @override
   State<EditProfile> createState() => _ProfileEdit();
 }
 
 class _ProfileEdit extends State<EditProfile> {
+  String uname1 = "";
+  String email_pelanggan = "";
+  String nomer_hp = "";
+  String kode_pelanggan = "";
+  Future getdataprofil() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      kode_pelanggan = (prefs.getString('kode_pelanggan') ?? "");
+      uname1 = (prefs.getString('nama_pelanggan') ?? "");
+      email_pelanggan = (prefs.getString('email_pelanggan') ?? "");
+      nomer_hp = (prefs.getString('nomer_hp') ?? "");
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getdataprofil();
+  }
+
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    final nama = TextEditingController(text: widget.uname1);
-    final email = TextEditingController(text: widget.email_pelanggan);
-    final hp = TextEditingController(text: widget.nomer_hp);
+    final nama = TextEditingController(text: uname1);
+    final email = TextEditingController(text: email_pelanggan);
+    final hp = TextEditingController(text: nomer_hp);
     Future editprofil() async {
-        var url = Uri.http(
-          "${Env.URL_PERFIX}", '/projectWeb/API/editprofil.php', {'q': '{http}'});
+      var url = Uri.http("${Env.URL_PERFIX}", '/projectWeb/API/editprofil.php',
+          {'q': '{http}'});
       var response = await http.post(url, body: {
         "email": email.text.toString(),
-        "email_user": widget.email_pelanggan,
+        "email_user": email_pelanggan,
         "nama": nama.text.toString(),
         "hp": hp.text.toString(),
-        "kode_pelanggan": widget.kode_pelanggan,
+        "kode_pelanggan": kode_pelanggan,
       });
       var data = json.decode(response.body);
       if (data == "Error") {
@@ -59,23 +63,30 @@ class _ProfileEdit extends State<EditProfile> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Edit berhasil')),
         );
+
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString(
+          'email_pelanggan',
+          email.text.toString(),
+        );
+        await prefs.setString(
+          'nama_pelanggan',
+          nama.text.toString(),
+        );
+        await prefs.setString(
+          'nomer_hp',
+          hp.text.toString(),
+        );
+
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => BottomNav(
-              uname: widget.uname,
-              uname1: nama.text.toString(),
-              status: widget.status,
-              kecepatan: widget.kecepatan,
-              kode_pelanggan: widget.kode_pelanggan,
-              email_pelanggan: email.text.toString(),
-              nomer_hp: hp.text.toString(),
-              password: widget.password,
-            ),
+            builder: (context) => BottomNav(),
           ),
         );
       }
     }
+
     return SafeArea(
         child: Scaffold(
       appBar: PreferredSize(
@@ -115,13 +126,17 @@ class _ProfileEdit extends State<EditProfile> {
                           cursorColor: blackColor,
                           controller: nama,
                           decoration: new InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(vertical: 3),
+                              contentPadding:
+                                  const EdgeInsets.symmetric(vertical: 3),
                               labelText: "Nama Lengkap",
                               labelStyle: TextFieldStyle,
-                              floatingLabelBehavior: FloatingLabelBehavior.always,
-                              hintText: widget.uname1,
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              hintText: uname1,
                               hintStyle: GoogleFonts.montserrat(
-                                  fontSize: 16, color: grey2Color, fontWeight: FontWeight.w600),
+                                  fontSize: 16,
+                                  color: grey2Color,
+                                  fontWeight: FontWeight.w600),
                               focusedBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(color: blackColor))),
                           validator: (value) {
@@ -139,13 +154,17 @@ class _ProfileEdit extends State<EditProfile> {
                           cursorColor: blackColor,
                           controller: email,
                           decoration: new InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(vertical: 3),
+                              contentPadding:
+                                  const EdgeInsets.symmetric(vertical: 3),
                               labelText: "Email",
                               labelStyle: TextFieldStyle,
-                              floatingLabelBehavior: FloatingLabelBehavior.always,
-                              hintText: widget.email_pelanggan,
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              hintText: email_pelanggan,
                               hintStyle: GoogleFonts.montserrat(
-                                  fontSize: 16, color: grey2Color, fontWeight: FontWeight.w600),
+                                  fontSize: 16,
+                                  color: grey2Color,
+                                  fontWeight: FontWeight.w600),
                               focusedBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(color: blackColor))),
                           validator: (value) {
@@ -166,13 +185,17 @@ class _ProfileEdit extends State<EditProfile> {
                           controller: hp,
                           keyboardType: TextInputType.number,
                           decoration: new InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(vertical: 3),
+                              contentPadding:
+                                  const EdgeInsets.symmetric(vertical: 3),
                               labelText: "Nomer HP",
                               labelStyle: TextFieldStyle,
-                              floatingLabelBehavior: FloatingLabelBehavior.always,
-                              hintText: widget.nomer_hp,
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              hintText: nomer_hp,
                               hintStyle: GoogleFonts.montserrat(
-                                  fontSize: 16, color: grey2Color, fontWeight: FontWeight.w600),
+                                  fontSize: 16,
+                                  color: grey2Color,
+                                  fontWeight: FontWeight.w600),
                               focusedBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(color: blackColor))),
                           validator: (value) {
@@ -213,7 +236,6 @@ class _ProfileEdit extends State<EditProfile> {
             ),
           ],
         )
-
       ]),
     ));
   }

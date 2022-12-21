@@ -1,3 +1,3 @@
 class Env {
-  static String URL_PERFIX = "10.10.175.233";
+  static String URL_PERFIX = "192.168.1.132:8080";
 }

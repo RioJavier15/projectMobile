@@ -16,7 +16,7 @@ class ContactAdmin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void launcWhatsapp({@required number, @required message})async{
+    void launcWhatsapp({@required number, @required message}) async {
       String url = "whatsapp://send?phone=$number&text=$message";
 
       await canLaunch(url) ? launch(url) : print("Can't open whatsapp");
@@ -40,7 +40,9 @@ class ContactAdmin extends StatelessWidget {
               // ScaffoldMessenger.of(context).showSnackBar(
               //         const SnackBar(content: Text('Processing Data')),
               //       );
-              launcWhatsapp(number: "+6282332520747", message: "Hello");
+              launcWhatsapp(
+                  number: "+6282332520747",
+                  message: "Hallo min saya ingin berlangganan");
             },
             style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),

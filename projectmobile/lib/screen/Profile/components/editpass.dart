@@ -6,33 +6,31 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:projectmobile/bottomnav.dart';
 import 'package:projectmobile/env.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EditPassword extends StatefulWidget {
-  final String uname;
-  final String uname1;
-  final String status;
-  final String kecepatan;
-  final String kode_pelanggan;
-  final String email_pelanggan;
-  final String nomer_hp;
-  final String password;
-  EditPassword({
-    Key? key,
-    required this.uname,
-    required this.uname1,
-    required this.status,
-    required this.kecepatan,
-    required this.kode_pelanggan,
-    required this.email_pelanggan,
-    required this.nomer_hp,
-    required this.password,
-  }) : super(key: key);
+  const EditPassword({Key? key}) : super(key: key);
 
   @override
   State<EditPassword> createState() => _EditPassword();
 }
 
 class _EditPassword extends State<EditPassword> {
+  String kode_pelanggan = "";
+  Future getdatapw() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      kode_pelanggan = (prefs.getString('kode_pelanggan') ?? "");
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getdatapw();
+  }
+
   final TextEditingController pass = TextEditingController();
   final TextEditingController pass1 = TextEditingController();
   bool showPassword = false;
@@ -44,26 +42,22 @@ class _EditPassword extends State<EditPassword> {
           "${Env.URL_PERFIX}", '/projectWeb/API/editpw.php', {'q': '{http}'});
       var response = await http.post(url, body: {
         "password": pass.text.toString(),
-        "kode": widget.kode_pelanggan,
+        "kode": kode_pelanggan,
       });
       var data = json.decode(response.body);
       if (data == "Success") {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Edit password berhasil')),
         );
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString(
+          'password',
+          pass.text.toString(),
+        );
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => BottomNav(
-              uname: widget.uname,
-              uname1: widget.uname1,
-              status: widget.status,
-              kecepatan: widget.kecepatan,
-              kode_pelanggan: widget.kode_pelanggan,
-              email_pelanggan: widget.email_pelanggan,
-              nomer_hp: widget.nomer_hp,
-              password: pass.text.toString(),
-            ),
+            builder: (context) => BottomNav(),
           ),
         );
       } else {
@@ -72,6 +66,7 @@ class _EditPassword extends State<EditPassword> {
         );
       }
     }
+
     return SafeArea(
         child: Scaffold(
       appBar: PreferredSize(
@@ -106,69 +101,76 @@ class _EditPassword extends State<EditPassword> {
               child: Column(
                 children: [
                   Form(
-                      key: _formKey,
-                      child: Column(children: <Widget>[
-                        new Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                        ),
-                        TextFormField(
-                          showCursor: true,
-                          cursorColor: blackColor,
-                          controller: pass,
-                          decoration: new InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(vertical: 3),
-                              labelText: "Password",
-                              labelStyle: TextFieldStyle,
-                              floatingLabelBehavior: FloatingLabelBehavior.always,
-                              hintText: "*************",
-                              hintStyle: GoogleFonts.montserrat(
-                                  fontSize: 16, color: grey2Color, fontWeight: FontWeight.w600),
-                              focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: blackColor))),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
-                            }
-                            return null;
-                          },
-                        ),
-                        new Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                        ),
-                        TextFormField(
-                          showCursor: true,
-                          cursorColor: blackColor,
-                          controller: pass1,
-                          decoration: new InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(vertical: 3),
-                              labelText: "Konfirmasi Password",
-                              labelStyle: TextFieldStyle,
-                              floatingLabelBehavior: FloatingLabelBehavior.always,
-                              hintText: "*************",
-                              hintStyle: GoogleFonts.montserrat(
-                                  fontSize: 16, color: grey2Color, fontWeight: FontWeight.w600),
-                              focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: blackColor))),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
-                            }
-                            return null;
-                          },
-                        ),
-                      ]
-                      ),),
+                    key: _formKey,
+                    child: Column(children: <Widget>[
+                      new Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                      ),
+                      TextFormField(
+                        showCursor: true,
+                        cursorColor: blackColor,
+                        controller: pass,
+                        decoration: new InputDecoration(
+                            contentPadding:
+                                const EdgeInsets.symmetric(vertical: 3),
+                            labelText: "Password",
+                            labelStyle: TextFieldStyle,
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            hintText: "*************",
+                            hintStyle: GoogleFonts.montserrat(
+                                fontSize: 16,
+                                color: grey2Color,
+                                fontWeight: FontWeight.w600),
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: blackColor))),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
+                      ),
+                      new Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                      ),
+                      TextFormField(
+                        showCursor: true,
+                        cursorColor: blackColor,
+                        controller: pass1,
+                        decoration: new InputDecoration(
+                            contentPadding:
+                                const EdgeInsets.symmetric(vertical: 3),
+                            labelText: "Konfirmasi Password",
+                            labelStyle: TextFieldStyle,
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            hintText: "*************",
+                            hintStyle: GoogleFonts.montserrat(
+                                fontSize: 16,
+                                color: grey2Color,
+                                fontWeight: FontWeight.w600),
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: blackColor))),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
+                      ),
+                    ]),
+                  ),
                   SizedBox(height: 20),
                   SizedBox(
                       height: 35,
                       child: ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            if(pass.text.toString() == pass1.text.toString()){
+                            if (pass.text.toString() == pass1.text.toString()) {
                               editpass();
-                            }else{
+                            } else {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Pasword tidak sama')),
+                                const SnackBar(
+                                    content: Text('Pasword tidak sama')),
                               );
                             }
                           }

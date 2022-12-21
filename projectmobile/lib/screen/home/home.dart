@@ -7,25 +7,31 @@ import 'package:projectmobile/screen/home/model/Kontak.dart';
 import 'package:projectmobile/theme/theme.dart';
 import 'package:projectmobile/env.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
-  String nama;
-  String namaProduk;
-  String status;
-  String kecepatan;
-  HomeScreen(this.nama, this.namaProduk, this.status, this.kecepatan);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() =>
-      _HomeScreenState(nama, namaProduk, status, kecepatan);
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String nama;
-  String namaProduk;
-  String status;
-  String kecepatan;
-  _HomeScreenState(this.nama, this.namaProduk, this.status, this.kecepatan);
+  String nama = "";
+  String namaProduk = "";
+  String status = "";
+  String kecepatan = "";
+  Future getdatahome() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      namaProduk = (prefs.getString('nama_produk') ?? "");
+      nama = (prefs.getString('nama_pelanggan') ?? "");
+      status = (prefs.getString('status') ?? "");
+      kecepatan = (prefs.getString('kecepatan') ?? "");
+    });
+  }
+
   late List produk;
   Future<String> getproduk() async {
     var response = await http.post(Uri.http(
@@ -37,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void initState() {
+    getdatahome();
     getproduk();
   }
 

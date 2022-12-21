@@ -5,22 +5,30 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:http/http.dart' as htpp;
 import 'package:projectmobile/env.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Riwayat extends StatefulWidget {
-  String kode_pelanggan;
-  Riwayat(this.kode_pelanggan);
+  const Riwayat({Key? key}) : super(key: key);
 
   @override
-  State<Riwayat> createState() => _RiwayatState(kode_pelanggan);
+  State<Riwayat> createState() => _RiwayatState();
 }
 
 class _RiwayatState extends State<Riwayat> {
-  String kode_pelanggan;
-  _RiwayatState(this.kode_pelanggan);
+  String kode_pelanggan = "";
+  Future getkoderiwayat() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      kode_pelanggan = (prefs.getString('kode_pelanggan') ?? "");
+    });
+  }
+
   late List blogdata;
   Future<String> getBlogData() async {
     var response = await htpp.post(
-        Uri.http("${Env.URL_PERFIX}", '/projectWeb/API/transaksi.php', {'q': '{http}'}),
+        Uri.http("${Env.URL_PERFIX}", '/projectWeb/API/transaksi.php',
+            {'q': '{http}'}),
         body: {
           "kode_pelanggan": kode_pelanggan,
         });
@@ -31,6 +39,7 @@ class _RiwayatState extends State<Riwayat> {
   }
 
   void initState() {
+    getkoderiwayat();
     getBlogData();
   }
 

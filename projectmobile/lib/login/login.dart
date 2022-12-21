@@ -10,6 +10,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:projectmobile/screen/home/home.dart';
 import 'package:projectmobile/env.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -53,21 +55,44 @@ class _LoginScreenState extends State<LoginScreen> {
           //hide progress indicator
           _visible = false;
         });
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setBool('isLoggedIn', true);
 
+        await prefs.setString(
+          'kode_pelanggan',
+          msg['userInfo']['kode_pelanggan'],
+        );
+        await prefs.setString(
+          'nama_produk',
+          msg['userInfo']['nama_produk'],
+        );
+        await prefs.setString(
+          'nama_pelanggan',
+          msg['userInfo']['nama_pelanggan'],
+        );
+        await prefs.setString(
+          'status',
+          msg['userInfo']['status'],
+        );
+        await prefs.setString(
+          'kecepatan',
+          msg['userInfo']['kecepatan'],
+        );
+        await prefs.setString(
+          'email_pelanggan',
+          msg['userInfo']['email_pelanggan'],
+        );
+        await prefs.setString(
+          'nomer_hp',
+          msg['userInfo']['nomer_hp'],
+        );
+        await prefs.setString(
+          'password',
+          msg['userInfo']['password'],
+        );
         // Navigate to Home Screen
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => BottomNav(
-                      uname: msg['userInfo']['nama_produk'],
-                      uname1: msg['userInfo']['nama_pelanggan'],
-                      status: msg['userInfo']['status'],
-                      kecepatan: msg['userInfo']['kecepatan'],
-                      kode_pelanggan: msg['userInfo']['kode_pelanggan'],
-                      email_pelanggan: msg['userInfo']['email_pelanggan'],
-                      nomer_hp: msg['userInfo']['nomer_hp'],
-                      password: msg['userInfo']['password'],
-                    )));
+            context, MaterialPageRoute(builder: (context) => BottomNav()));
       } else {
         setState(() {
           //hide progress indicator

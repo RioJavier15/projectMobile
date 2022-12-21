@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:projectmobile/theme/theme.dart';
 import '../login/login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LogoutDialog extends StatelessWidget {
   @override
@@ -33,7 +34,42 @@ class LogoutDialog extends StatelessWidget {
                         child: Row(
                           children: [
                             ElevatedButton(
-                              onPressed: () {
+                              onPressed: () async {
+                                final prefs =
+                                    await SharedPreferences.getInstance();
+                                prefs.setBool('isLoggedIn', false);
+                                await prefs.setString(
+                                  'kode_pelanggan',
+                                  "",
+                                );
+                                await prefs.setString(
+                                  'nama_produk',
+                                  "",
+                                );
+                                await prefs.setString(
+                                  'nama_pelanggan',
+                                  "",
+                                );
+                                await prefs.setString(
+                                  'status',
+                                  "",
+                                );
+                                await prefs.setString(
+                                  'kecepatan',
+                                  "",
+                                );
+                                await prefs.setString(
+                                  'email_pelanggan',
+                                  "",
+                                );
+                                await prefs.setString(
+                                  'nomer_hp',
+                                  "",
+                                );
+                                await prefs.setString(
+                                  'password',
+                                  "",
+                                );
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(

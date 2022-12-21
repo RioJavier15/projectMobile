@@ -5,23 +5,31 @@ import 'package:projectmobile/screen/Profile/components/EditProfile.dart';
 import 'package:projectmobile/screen/Profile/components/editpass.dart';
 import 'package:projectmobile/screen/Profile/components/faq.dart';
 import 'package:projectmobile/theme/theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
-  String uname;
-  String uname1;
-  String status;
-  String kecepatan;
-  String kode_pelanggan;
-  String email_pelanggan;
-  String nomer_hp;
-  String password;
-  ProfileScreen(this.uname, this.uname1, this.status, this.kecepatan,
-      this.kode_pelanggan, this.email_pelanggan, this.nomer_hp, this.password);
+  const ProfileScreen({Key? key}) : super(key: key);
+
   @override
   _ProfileScreen createState() => _ProfileScreen();
 }
 
 class _ProfileScreen extends State<ProfileScreen> {
+  String uname1 = "";
+  Future getnama() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      uname1 = (prefs.getString('nama_pelanggan') ?? "");
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getnama();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -37,28 +45,33 @@ class _ProfileScreen extends State<ProfileScreen> {
             body: ListView(children: [
               Column(
                 children: [
-            Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 5),
-            child: Column(
-              children: [
-                CircleAvatar(
-                  child: Text(
-                    widget.uname1[0],
-                    style: GoogleFonts.montserrat(
-                        fontSize: 30, fontWeight: FontWeight.w600),
-                  ),
-                  radius: 40,
-                  backgroundColor: ButtonBackground,
-                ),
-                Padding(padding: EdgeInsets.symmetric(vertical: 5, horizontal: 24)),
-                Text(
-                  widget.uname1,
-                  style: GoogleFonts.montserrat(
-                      fontSize: 20, fontWeight: FontWeight.w600, color: blackColor),
-                  textAlign: TextAlign.right,
-                ),
-              ],
-            )),
+                  Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 24, vertical: 5),
+                      child: Column(
+                        children: [
+                          CircleAvatar(
+                            child: Text(
+                              uname1[0],
+                              style: GoogleFonts.montserrat(
+                                  fontSize: 30, fontWeight: FontWeight.w600),
+                            ),
+                            radius: 40,
+                            backgroundColor: ButtonBackground,
+                          ),
+                          Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 5, horizontal: 24)),
+                          Text(
+                            uname1,
+                            style: GoogleFonts.montserrat(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                color: blackColor),
+                            textAlign: TextAlign.right,
+                          ),
+                        ],
+                      )),
                   const Padding(padding: EdgeInsets.all(5)),
                   ProfileMenu(
                     text: 'Edit Profile',
@@ -66,16 +79,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                     press: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => EditProfile(
-                                uname: widget.uname,
-                                uname1: widget.uname1,
-                                status: widget.status,
-                                kecepatan: widget.kecepatan,
-                                kode_pelanggan: widget.kode_pelanggan,
-                                email_pelanggan: widget.email_pelanggan,
-                                nomer_hp: widget.nomer_hp,
-                                password: widget.password)),
+                        MaterialPageRoute(builder: (context) => EditProfile()),
                       );
                     },
                   ),
@@ -85,15 +89,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                     press: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) =>  EditPassword(uname: widget.uname,
-                                uname1: widget.uname1,
-                                status: widget.status,
-                                kecepatan: widget.kecepatan,
-                                kode_pelanggan: widget.kode_pelanggan,
-                                email_pelanggan: widget.email_pelanggan,
-                                nomer_hp: widget.nomer_hp,
-                                password: widget.password)),
+                        MaterialPageRoute(builder: (context) => EditPassword()),
                       );
                     },
                   ),
@@ -162,5 +158,3 @@ class ProfileMenu extends StatelessWidget {
     );
   }
 }
-
-
