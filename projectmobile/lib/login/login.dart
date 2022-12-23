@@ -11,7 +11,9 @@ import 'package:http/http.dart' as http;
 import 'package:projectmobile/screen/home/home.dart';
 import 'package:projectmobile/env.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:projectmobile/notificationservice.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest.dart' as tz;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -25,11 +27,42 @@ class _LoginScreenState extends State<LoginScreen> {
   //Textediting Controller for Username and Password Input
   final userController = TextEditingController();
   final pwdController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    tz.initializeTimeZones();
+  }
+
+  void notif() async {
+    final prefs = await SharedPreferences.getInstance();
+    String status = (prefs.getString('status') ?? "");
+    final date = DateTime.now();
+    final tanggal = DateTime(date.year, date.month + 1, 1);
+    final Duration durasi = tanggal.difference(date);
+    DateTime hari = DateTime.now();
+    // var status = "aktif";
+    if (durasi.inDays == 7 && status == "aktif") {
+      NotificationService().showNotification(
+          1, "Masa aktif", "Masa aktif paket internet 7 hari lagi");
+    } else if (durasi.inDays == 3 && status == "aktif") {
+      NotificationService().showNotification(
+          2, "Masa aktif", "Masa aktif paket internet 3 hari lagi");
+    } else if (durasi.inDays == 1 && status == "aktif") {
+      NotificationService().showNotification(
+          3, "Masa aktif", "Masa aktif paket internet berakhir hari ini");
+    } else if (status == "none") {
+      NotificationService().showNotification(4, "Belum berlangganan",
+          "Anda belum berlangganan paket intenet. Hubungi admin untuk berlangganan");
+    } else if (status == "non aktif") {
+      NotificationService().showNotification(4, "Paket Non Aktif",
+          "Hubungi admin untuk mengaktifkan paket internet anda");
+    }
+  }
 
   Future userLogin() async {
     //Login API URL
     //use your local IP address instead of localhost or use Web API
-    String url = "http://${Env.URL_PERFIX}/projectWeb/API/login.php";
+    String url = "${Env.URL_PERFIX}/API/login.php";
 
     // Showing LinearProgressIndicator.
     setState(() {
@@ -93,6 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
         // Navigate to Home Screen
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => BottomNav()));
+        notif();
       } else {
         setState(() {
           //hide progress indicator

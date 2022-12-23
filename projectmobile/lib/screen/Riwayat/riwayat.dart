@@ -6,6 +6,7 @@ import 'dart:async';
 import 'package:http/http.dart' as htpp;
 import 'package:projectmobile/env.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:projectmobile/formatstring.dart';
 
 class Riwayat extends StatefulWidget {
   const Riwayat({Key? key}) : super(key: key);
@@ -26,12 +27,10 @@ class _RiwayatState extends State<Riwayat> {
 
   late List blogdata;
   Future<String> getBlogData() async {
-    var response = await htpp.post(
-        Uri.http("${Env.URL_PERFIX}", '/projectWeb/API/transaksi.php',
-            {'q': '{http}'}),
-        body: {
-          "kode_pelanggan": kode_pelanggan,
-        });
+    String url = "${Env.URL_PERFIX}/API/transaksi.php";
+    var response = await htpp.post(Uri.parse(url), body: {
+      "kode_pelanggan": kode_pelanggan,
+    });
     setState(() {
       blogdata = json.decode(response.body);
     });

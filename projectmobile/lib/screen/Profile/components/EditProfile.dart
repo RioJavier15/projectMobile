@@ -8,6 +8,7 @@ import 'dart:convert';
 import 'package:projectmobile/bottomnav.dart';
 import 'package:projectmobile/env.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:projectmobile/formatstring.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -41,13 +42,12 @@ class _ProfileEdit extends State<EditProfile> {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    final nama = TextEditingController(text: uname1);
+    final nama = TextEditingController(text: uname1.toTitleCase());
     final email = TextEditingController(text: email_pelanggan);
     final hp = TextEditingController(text: nomer_hp);
     Future editprofil() async {
-      var url = Uri.http("${Env.URL_PERFIX}", '/projectWeb/API/editprofil.php',
-          {'q': '{http}'});
-      var response = await http.post(url, body: {
+      String url = "${Env.URL_PERFIX}/API/editprofil.php";
+      var response = await http.post(Uri.parse(url), body: {
         "email": email.text.toString(),
         "email_user": email_pelanggan,
         "nama": nama.text.toString(),
@@ -122,6 +122,7 @@ class _ProfileEdit extends State<EditProfile> {
                           padding: const EdgeInsets.symmetric(vertical: 10),
                         ),
                         TextFormField(
+                          maxLength: 25,
                           showCursor: true,
                           cursorColor: blackColor,
                           controller: nama,
@@ -150,6 +151,7 @@ class _ProfileEdit extends State<EditProfile> {
                           padding: const EdgeInsets.symmetric(vertical: 10),
                         ),
                         TextFormField(
+                          maxLength: 30,
                           showCursor: true,
                           cursorColor: blackColor,
                           controller: email,
@@ -180,6 +182,7 @@ class _ProfileEdit extends State<EditProfile> {
                           padding: const EdgeInsets.symmetric(vertical: 10),
                         ),
                         TextFormField(
+                          maxLength: 13,
                           showCursor: true,
                           cursorColor: blackColor,
                           controller: hp,

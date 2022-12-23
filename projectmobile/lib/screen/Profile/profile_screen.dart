@@ -6,6 +6,7 @@ import 'package:projectmobile/screen/Profile/components/editpass.dart';
 import 'package:projectmobile/screen/Profile/components/faq.dart';
 import 'package:projectmobile/theme/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:projectmobile/formatstring.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -52,7 +53,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                         children: [
                           CircleAvatar(
                             child: Text(
-                              uname1[0],
+                              uname1[0].toTitleCase(),
                               style: GoogleFonts.montserrat(
                                   fontSize: 30, fontWeight: FontWeight.w600),
                             ),
@@ -63,7 +64,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                               padding: EdgeInsets.symmetric(
                                   vertical: 5, horizontal: 24)),
                           Text(
-                            uname1,
+                            uname1.toTitleCase(),
                             style: GoogleFonts.montserrat(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600,

@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:projectmobile/theme/theme.dart';
 import 'package:projectmobile/login/login.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +21,8 @@ class _FormRegisterState extends State<Register> {
   TextEditingController controllerPass = TextEditingController();
   TextEditingController controllerHp = TextEditingController();
   Future register() async {
-    var url = Uri.http(
-        "${Env.URL_PERFIX}", '/projectWeb/API/register.php', {'q': '{http}'});
-    var response = await http.post(url, body: {
+    String url = "${Env.URL_PERFIX}/API/register.php";
+    var response = await http.post(Uri.parse(url), body: {
       "email": controllerEmail.text.toString(),
       "password": controllerPass.text.toString(),
       "nama": controllerNama.text.toString(),
@@ -102,6 +102,7 @@ class _FormRegisterState extends State<Register> {
                 children: <Widget>[
                   // Add TextFormFields and ElevatedButton here.
                   new TextFormField(
+                    maxLength: 30,
                     showCursor: true,
                     cursorColor: blackColor,
                     controller: controllerEmail,
@@ -127,6 +128,7 @@ class _FormRegisterState extends State<Register> {
                     padding: new EdgeInsets.only(top: 20.0),
                   ),
                   new TextFormField(
+                    maxLength: 25,
                     showCursor: true,
                     cursorColor: blackColor,
                     controller: controllerNama,
@@ -150,6 +152,7 @@ class _FormRegisterState extends State<Register> {
                     padding: new EdgeInsets.only(top: 20.0),
                   ),
                   new TextFormField(
+                    maxLength: 15,
                     showCursor: true,
                     cursorColor: blackColor,
                     controller: controllerPass,
@@ -184,7 +187,7 @@ class _FormRegisterState extends State<Register> {
                     padding: new EdgeInsets.only(top: 20.0),
                   ),
                   new TextFormField(
-                    showCursor: true,
+                    maxLength: 13,
                     cursorColor: blackColor,
                     controller: controllerHp,
                     keyboardType: TextInputType.number,

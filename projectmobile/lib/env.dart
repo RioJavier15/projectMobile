@@ -1,3 +1,3 @@
 class Env {
-  static String URL_PERFIX = "192.168.1.132:8080";
+  static String URL_PERFIX = "https://fansvision.000webhostapp.com/";
 }

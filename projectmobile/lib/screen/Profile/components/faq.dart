@@ -16,8 +16,8 @@ class Faq extends StatefulWidget {
 class _FaqState extends State<Faq> {
   late List Informasi;
   Future<String> getInformasi() async {
-    var response = await http.post(
-        Uri.http("${Env.URL_PERFIX}", '/projectWeb/API/faq.php', {'q': '{http}'}));
+    String url = "${Env.URL_PERFIX}/API/faq.php";
+    var response = await http.post(Uri.parse(url));
     setState(() {
       Informasi = json.decode(response.body);
     });

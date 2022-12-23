@@ -8,6 +8,7 @@ import 'package:projectmobile/theme/theme.dart';
 import 'package:projectmobile/env.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:projectmobile/formatstring.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -34,8 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   late List produk;
   Future<String> getproduk() async {
-    var response = await http.post(Uri.http(
-        "${Env.URL_PERFIX}", '/projectWeb/API/produk.php', {'q': '{http}'}));
+    String url = "${Env.URL_PERFIX}/API/produk.php";
+    var response = await http.post(Uri.parse(url));
     setState(() {
       produk = json.decode(response.body);
     });
@@ -83,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       children: [
                         Text(
-                          nama,
+                          nama.toTitleCase(),
                           style: GoogleFonts.nunito(
                             fontSize: 20,
                             fontWeight: FontWeight.w700,

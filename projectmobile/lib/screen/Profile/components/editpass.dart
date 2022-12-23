@@ -38,9 +38,8 @@ class _EditPassword extends State<EditPassword> {
   @override
   Widget build(BuildContext context) {
     Future editpass() async {
-      var url = Uri.http(
-          "${Env.URL_PERFIX}", '/projectWeb/API/editpw.php', {'q': '{http}'});
-      var response = await http.post(url, body: {
+      String url = "${Env.URL_PERFIX}/API/editpw.php";
+      var response = await http.post(Uri.parse(url), body: {
         "password": pass.text.toString(),
         "kode": kode_pelanggan,
       });
@@ -107,6 +106,7 @@ class _EditPassword extends State<EditPassword> {
                         padding: const EdgeInsets.symmetric(vertical: 10),
                       ),
                       TextFormField(
+                        maxLength: 15,
                         showCursor: true,
                         cursorColor: blackColor,
                         controller: pass,
@@ -134,6 +134,7 @@ class _EditPassword extends State<EditPassword> {
                         padding: const EdgeInsets.symmetric(vertical: 10),
                       ),
                       TextFormField(
+                        maxLength: 15,
                         showCursor: true,
                         cursorColor: blackColor,
                         controller: pass1,
