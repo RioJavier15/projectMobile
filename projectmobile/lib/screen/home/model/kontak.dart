@@ -42,7 +42,7 @@ class ContactAdmin extends StatelessWidget {
               //       );
               launcWhatsapp(
                   number: "+6282332520747",
-                  message: "Hallo min saya ingin berlangganan");
+                  message: "Hallo pak saya ada kendala jaringan");
             },
             style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),

@@ -16,6 +16,11 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  @override
+  void initState() {
+    tz.initializeTimeZones();
+  }
+
   final bool isLoggedIn;
   const MyApp({Key? key, required this.isLoggedIn}) : super(key: key);
 
