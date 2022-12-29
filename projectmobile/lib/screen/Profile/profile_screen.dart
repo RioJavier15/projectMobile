@@ -42,6 +42,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                   title: Text('Pengaturan Akun', style: AppbarStyle),
                   backgroundColor: Colors.transparent,
                   elevation: 0,
+                  automaticallyImplyLeading: false,
                 )),
             body: ListView(children: [
               Column(

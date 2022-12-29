@@ -89,8 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final date = DateTime.now();
     final tanggal = DateTime(date.year, date.month + 1, 1);
     final Duration durasi = tanggal.difference(date);
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
       backgroundColor: primaryColor,
       body: Container(
         child: ListView(
@@ -432,6 +431,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-    ));
+    );
   }
 }

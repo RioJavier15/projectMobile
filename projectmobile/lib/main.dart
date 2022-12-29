@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     notif();
     return MaterialApp(
-      title: 'Project Mobile',
+      title: 'Fans Vision',
       theme: ThemeData(
           primarySwatch: Colors.blue,
           appBarTheme: AppBarTheme(

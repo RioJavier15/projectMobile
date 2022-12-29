@@ -87,8 +87,7 @@ class _ProfileEdit extends State<EditProfile> {
       }
     }
 
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(53),
         child: AppBar(
@@ -240,7 +239,7 @@ class _ProfileEdit extends State<EditProfile> {
           ],
         )
       ]),
-    ));
+    );
   }
 
   Widget buildTextField(String labelText, String placeholder) {

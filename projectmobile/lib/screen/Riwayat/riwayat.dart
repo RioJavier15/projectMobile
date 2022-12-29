@@ -57,6 +57,7 @@ class _RiwayatState extends State<Riwayat> {
             title: Text('Riwayat Pembayaran', style: AppbarStyle),
             backgroundColor: Colors.transparent,
             elevation: 0,
+            automaticallyImplyLeading: false,
           ),
         ),
         body: FutureBuilder<String>(

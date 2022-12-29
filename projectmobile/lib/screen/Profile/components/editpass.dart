@@ -66,8 +66,7 @@ class _EditPassword extends State<EditPassword> {
       }
     }
 
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(53),
           child: AppBar(
@@ -191,7 +190,7 @@ class _EditPassword extends State<EditPassword> {
               ))
         ])
       ]),
-    ));
+    );
   }
 
   Widget buildTextField(
