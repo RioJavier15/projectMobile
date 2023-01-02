@@ -192,52 +192,72 @@ class _LoginScreenState extends State<LoginScreen> {
                   fontWeight: FontWeight.bold,
                   fontSize: 27),
             ),
-            new Padding(
-              padding: new EdgeInsets.only(top: 40.0),
-            ),
-            new TextField(
-              showCursor: true,
-              cursorColor: blackColor,
-              controller: userController,
-              decoration: new InputDecoration(
-                  labelText: "Email",
-                  labelStyle: TextProfileStyle,
-                  hintText: "E-mail",
-                  focusColor: blackColor,
-                  fillColor: blackColor,
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: blackColor),
-                      borderRadius: new BorderRadius.circular(15)),
-                  border: new OutlineInputBorder(
-                      borderSide: BorderSide(color: blackColor),
-                      borderRadius: new BorderRadius.circular(15))),
-            ),
-            new Padding(
-              padding: new EdgeInsets.only(top: 20.0),
-            ),
-            new TextField(
-              showCursor: true,
-              cursorColor: blackColor,
-              controller: pwdController,
-              obscureText: _visible,
-              decoration: new InputDecoration(
-                  labelText: "Password",
-                  hintText: "Password",
-                  labelStyle: TextProfileStyle,
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: blackColor),
-                      borderRadius: new BorderRadius.circular(15)),
-                  border: new OutlineInputBorder(
-                      borderRadius: new BorderRadius.circular(15)),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                        _visible ? Icons.visibility : Icons.visibility_off),
-                    onPressed: () {
-                      setState(() {
-                        _visible = !_visible;
-                      });
+            new Form(
+              key: _formKey,
+              child: Column(
+                children: <Widget>[
+                  new Padding(
+                    padding: new EdgeInsets.only(top: 40.0),
+                  ),
+                  new TextFormField(
+                    showCursor: true,
+                    cursorColor: blackColor,
+                    controller: userController,
+                    decoration: new InputDecoration(
+                        labelText: "Email",
+                        labelStyle: TextProfileStyle,
+                        hintText: "E-mail",
+                        focusColor: blackColor,
+                        fillColor: blackColor,
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: blackColor),
+                            borderRadius: new BorderRadius.circular(15)),
+                        border: new OutlineInputBorder(
+                            borderSide: BorderSide(color: blackColor),
+                            borderRadius: new BorderRadius.circular(15))),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
                     },
-                  )),
+                  ),
+                  new Padding(
+                    padding: new EdgeInsets.only(top: 20.0),
+                  ),
+                  new TextFormField(
+                    showCursor: true,
+                    cursorColor: blackColor,
+                    controller: pwdController,
+                    obscureText: _visible,
+                    decoration: new InputDecoration(
+                        labelText: "Password",
+                        hintText: "Password",
+                        labelStyle: TextProfileStyle,
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: blackColor),
+                            borderRadius: new BorderRadius.circular(15)),
+                        border: new OutlineInputBorder(
+                            borderRadius: new BorderRadius.circular(15)),
+                        suffixIcon: IconButton(
+                          icon: Icon(_visible
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          onPressed: () {
+                            setState(() {
+                              _visible = !_visible;
+                            });
+                          },
+                        )),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                  ),
+                ],
+              ),
             ),
             new Padding(
               padding: new EdgeInsets.only(top: 20.0),
@@ -291,7 +311,9 @@ class _LoginScreenState extends State<LoginScreen> {
             style: raisedButtonStyle,
             child: Text("Sign in"),
             onPressed: () {
-              userLogin();
+              if (_formKey.currentState!.validate()) {
+                userLogin();
+              }
 
               // Text('Sign in');
             },

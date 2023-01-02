@@ -35,67 +35,66 @@ class _FaqState extends State<Faq> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-            appBar: PreferredSize(
-              preferredSize: Size.fromHeight(53),
-              child: AppBar(
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                centerTitle: true,
-                title: Text(
-                  'Informasi Dan Bantuan',
-                  style: AppbarStyle,
-                ),
-                leading: IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  iconSize: 24,
-                  color: blackColor,
-                  splashRadius: 20,
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
+    return Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(53),
+          child: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            centerTitle: true,
+            title: Text(
+              'Informasi Dan Bantuan',
+              style: AppbarStyle,
             ),
-            body: Padding(
-                padding: EdgeInsets.only(left: 5, top: 20),
-                child: FutureBuilder(
-                    future: getInformasi(),
-                    builder: (context, AsyncSnapshot snapshot) {
-                      if (snapshot.hasData) {
-                        return ListView.separated(
-                          itemCount: Informasi == null ? 0 : Informasi.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ExpansionTile(
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              iconSize: 24,
+              color: blackColor,
+              splashRadius: 20,
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ),
+        ),
+        body: Padding(
+            padding: EdgeInsets.only(left: 5, top: 20),
+            child: FutureBuilder(
+                future: getInformasi(),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.separated(
+                      itemCount: Informasi == null ? 0 : Informasi.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ExpansionTile(
+                          title: Text(
+                            Informasi[index]["pertanyaan"],
+                            style: GoogleFonts.montserrat(
+                                color: blackColor,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          children: <Widget>[
+                            ListTile(
                               title: Text(
-                                Informasi[index]["pertanyaan"],
+                                Informasi[index]["jawaban"],
                                 style: GoogleFonts.montserrat(
                                     color: blackColor,
                                     fontSize: 15,
-                                    fontWeight: FontWeight.w500),
+                                    fontWeight: FontWeight.w600),
                               ),
-                              children: <Widget>[
-                                ListTile(
-                                  title: Text(
-                                    Informasi[index]["jawaban"],
-                                    style: GoogleFonts.montserrat(
-                                        color: blackColor,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                )
-                              ],
-                            );
-                          },
-                          separatorBuilder: (BuildContext context, int index) =>
-                              const Divider(),
+                            )
+                          ],
                         );
-                      } else {
-                        return Center(
-                          child: Container(),
-                        );
-                      }
-                    }))));
+                      },
+                      separatorBuilder: (BuildContext context, int index) =>
+                          const Divider(),
+                    );
+                  } else {
+                    return Center(
+                      child: Container(),
+                    );
+                  }
+                })));
   }
 }
